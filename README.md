@@ -1,17 +1,17 @@
 # Instituto Federal de Alagoas - Campus Arapiraca
 ### Prof. Alaelson Jatobá
 
-### ALUNOS :
-|          |   |           **GRUPO 3**           |   |   |   |
-|:--------:|:-:|:-------------------------------:|:-:|:-:|:-:|
-|          |   |                                 |   |   |   |
-|          |   | _NOME DOS INTEGRANTES:_         |   |   |   |
-| ALUNO 1: |   | Jeycy Karollaynny Silva Almeida |   |   |   |
-| ALUNO 2: |   | Marya Eduardha Freitas Pereira  |   |   |   |
-| ALUNO 3: |   | Ana Clara Silva Nunes           |   |   |   |
-| ALUNO 4: |   | Isabel Vitória da Silva Gama    |   |   |   |
-| ALUNO 5: |   | Lavynia Farias Santos           |   |   |   |
-|          |   |                                 |   |   |   |
+#### ALUNAS :
+|          |           **GRUPO 3**           |
+|:--------:|:-------------------------------:|
+|          |                                 |
+|          | _NOME DOS INTEGRANTES:_         |
+| ALUNA 1: | Jeycy Karollaynny Silva Almeida |
+| ALUNA 2: | Marya Eduardha Freitas Pereira  |
+| ALUNA 3: | Ana Clara Silva Nunes           |
+| ALUNA 4: | Isabel Vitória da Silva Gama    |
+| ALUNA 5: | Lavynia Farias Santos           |
+|          |                                 |
 
 ## Sumário
 
