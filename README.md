@@ -1,7 +1,7 @@
 # Instituto Federal de Alagoas - Campus Arapiraca
 ### Prof. Alaelson Jatobá
 
-# Alunos E INFORMAÇÕES IMPORTANTES:
+* Alunos E INFORMAÇÕES IMPORTANTES:
 |                  |                |              **GRUPO 3**              |         |                  |   |
 |:----------------:|:--------------:|:-------------------------------------:|:-------:|:----------------:|:-:|
 |                  |                |                                       |         |                  |   |
