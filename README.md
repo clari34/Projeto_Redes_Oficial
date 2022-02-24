@@ -54,15 +54,24 @@
 
 ### A CONFIGURAÇÃO DE HARDWARE UTILIZADA EM CADA MV:
 
-|                 _GW_                 |
-|:------------------------------------:|
-| System load: 0.0                     |
-| Processes: 198                       |
-| Usage of/: 37.4% of 18.57GB          |
-| Users logged in: 0                   |
-| Memory usage: 22%                    |
-| IPv4 address for ens160: 10.9.14.114 |
-| Swap usage:0%                        |
+|               **GW :**               |               **SMB :**              |
+|:------------------------------------:|:------------------------------------:|
+| System load: 0.0                     | System load:0.0                      |
+| Processes: 198                       | Processes: 211                       |
+| Usage of/: 37.4% of 18.57GB          | Usage of /: 38.5% of 18.57GB         |
+| Users logged in: 0                   | Users logged in: 0                   |
+| Memory usage: 22%                    | Memory usage: 27%                    |
+| IPv4 address for ens160: 10.9.14.114 | IPv4 address for ens160: 10.9.14.225 |
+| Swap usage:0%                        | Swap usage: 0%                       |
+|               **NS1 :**              |               **NS2 :**              |
+| System load: 0.0                     | System load: 0.0                     |
+| Processes: 204                       | Processes: 204                       |
+| Usage of /: 38.4% of 18.57GB         | Usage of /: 39.1% of 18.57GB         |
+| Users logged in: 0                   | Users logged in: 1                   |
+| Memory usage: 25%                    | Memory usage: 24%                    |
+| IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
+| Swap usage: 0%                       | Swap usage: 0%                       |
 
 
-## Considerações Finais
+## Considerações Finais:
+    Esse repositório será atualizado de acordo com o andamento do projeto. 
