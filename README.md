@@ -50,6 +50,19 @@
 | Grupo3vm1 | FQDN DO WEB:                     | www.grupo3.turma914.ifalara.local |
 | Grupo3vm2 | FQDN DO BD:                      | bd.grupo3.turma914.ifalara.local  |
 
-## 3. Implementação dos Serivços de Rede (Cada serviço uma sessão)
+## 3. Implementação dos Serviços de Rede (Cada serviço uma sessão)
+
+### A CONFIGURAÇÃO DE HARDWARE UTILIZADA EM CADA MV:
+
+|                 _GW_                 |
+|:------------------------------------:|
+| System load: 0.0                     |
+| Processes: 198                       |
+| Usage of/: 37.4% of 18.57GB          |
+| Users logged in: 0                   |
+| Memory usage: 22%                    |
+| IPv4 address for ens160: 10.9.14.114 |
+| Swap usage:0%                        |
+
 
 ## Considerações Finais
