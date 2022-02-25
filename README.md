@@ -52,7 +52,7 @@
 
 ## 3. Implementação dos Serviços de Rede (Cada serviço uma sessão)
 
-### A CONFIGURAÇÃO DE HARDWARE UTILIZADA EM CADA MV:
+###### A CONFIGURAÇÃO DE HARDWARE UTILIZADA EM CADA MV:
 
 |               **GW :**               |               **SMB :**              |
 |:------------------------------------:|:------------------------------------:|
@@ -72,7 +72,7 @@
 | IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
 | Swap usage: 0%                       | Swap usage: 0%                       |
 
-### Primeiro edite os hostnames com o nome de domínio(tabela 3) no S.O. de cada MV :
+###### Primeiro edite os hostnames com o nome de domínio(tabela 3) no S.O. de cada MV:
 - Na VM 10.9.14.225 : 
 
 $ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
@@ -88,6 +88,46 @@ sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
 - Na VM 10.9.14.113 :
 
 $ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
+
+###### **ROTEIRO:** 
+3.1.
+
+3.2. SAMBA: 
+- Nesse roteiro o servidor samba foi configurado na VM(10.9.14.225)
+
+- Utilize as informações das tabelas para modificar o arquivo por meio do comando $sudo nano /etc/netplan/00-installer-config.yaml : 
+network:
+  ethernets:
+    ens160:
+      dhcp4: false
+      addresses: [10.9.14.225/24]
+      gateway4: 10.9.14.1
+      nameservers:
+         addresses:
+           - 10.9.14.225
+         search: [smb.grupo3.turma914.ifalara.local]
+    ens192:
+      addresses: [192.168.0.194/29]
+  version: 2
+
+- Utilize Ctrl+x para salvar e execute $ sudo netplan apply para ativar as configurações
+
+- Verifique o funcionamento do gateway($ route -n), e observe se o IP do mesmo é devolvido
+
+- Instale o servidor Samba($ sudo apt-get install samba)
+
+- Verifique se o arquivo já está na sua máquina($ whereis samba) e depois olhe se ela está ativa($ sudo systemctl status smbd)
+smbd.service - Samba SMB Daemon
+     Loaded: loaded (/lib/systemd/system/smbd.service; enabled; vendor preset: enabled)
+     Active: *active* (running) since Tue 2022-02-22 19:59:02 
+
+- Verifique o funcionamento das portas($ netstat -an | grep LISTEN)
+
+- Realize o backup por meio do comando $ sudo cp /etc/samba/smb.conf{, .backup}
+
+- 
+
+3.3 Ns1 e Ns2 : 
 
 ## Considerações Finais:
     Esse repositório será atualizado de acordo com o andamento do projeto. 
