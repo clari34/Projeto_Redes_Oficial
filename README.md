@@ -72,6 +72,22 @@
 | IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
 | Swap usage: 0%                       | Swap usage: 0%                       |
 
+### Primeiro edite os hostnames com o nome de domínio(tabela 3) no S.O. de cada MV :
+- Na VM 10.9.14.225 : 
+
+$ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
+
+- Na VM 10.9.14.114 :
+
+$ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
+
+- Na VM 10.9.14.101 :
+
+sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
+
+- Na VM 10.9.14.113 :
+
+$ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
 
 ## Considerações Finais:
     Esse repositório será atualizado de acordo com o andamento do projeto. 
