@@ -1,5 +1,7 @@
 # Instituto Federal de Alagoas - Campus Arapiraca
+### Disciplina de Infraestrutura e Serviços de Rede
 ### Prof. Alaelson Jatobá
+### Turma 914
 
 #### ALUNAS :
 |          |           **GRUPO 3**           |
@@ -13,7 +15,22 @@
 | ALUNA 5: | Lavynia Farias Santos           |
 |          |                                 |
 
+
 ## Sumário
+
+- [X] 1. Introdução;
+- [ ] 2. Definições Iniciais:
+     - [X] 2.1. A configuração de hardware utilizada em cada VM;
+     - [X] 2.2. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs;
+     - [ ] 2.3. Edição dos hostnames com o nome de domínio (tabela anterior) no S.O. de cada MV;
+     - [ ] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
+- [ ] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
+     - [ ] 3.1. Instalação do Gateway Server NAT;
+     - [ ] 3.2. Instalação do SAMBA;
+     - [ ] 3.3. Configuração da rede interna LAN nas VMs;
+     - [ ] 3.4. Configuração do DNS Master (ns1) e DNS Slave (ns2);
+     - [ ] 3.5. Implementação do servidor Web LAMP;
+- [ ] 4. Considerações Finais; 
 
 ## 1. Introdução
 
@@ -25,7 +42,29 @@
   
 ## 2. Definições Iniciais
 
-### TABELAS DE DEFINIÇÕES DE IPs E NOMES PARA TODAS AS VMs:
+
+### 2.1. A configuração de hardware utilizada em cada VM:
+
+|               **GW :**               |               **SMB :**              |
+|:------------------------------------:|:------------------------------------:|
+| System load: 0.0                     | System load:0.0                      |
+| Processes: 198                       | Processes: 211                       |
+| Usage of/: 37.4% of 18.57GB          | Usage of /: 38.5% of 18.57GB         |
+| Users logged in: 0                   | Users logged in: 0                   |
+| Memory usage: 22%                    | Memory usage: 27%                    |
+| IPv4 address for ens160: 10.9.14.114 | IPv4 address for ens160: 10.9.14.225 |
+| Swap usage:0%                        | Swap usage: 0%                       |
+|               **NS1 :**              |               **NS2 :**              |
+| System load: 0.0                     | System load: 0.0                     |
+| Processes: 204                       | Processes: 204                       |
+| Usage of /: 38.4% of 18.57GB         | Usage of /: 39.1% of 18.57GB         |
+| Users logged in: 0                   | Users logged in: 1                   |
+| Memory usage: 25%                    | Memory usage: 24%                    |
+| IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
+| Swap usage: 0%                       | Swap usage: 0%                       |
+
+
+### 2.2. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs:
 
 |                    |         | **CONFIGURAÇÕES DAS INTERFACES DE REDE:** |         |                  |
 |--------------------|---------|-------------------------------------------|---------|------------------|
@@ -50,50 +89,41 @@
 | Grupo3vm1 | FQDN DO WEB:                     | www.grupo3.turma914.ifalara.local |
 | Grupo3vm2 | FQDN DO BD:                      | bd.grupo3.turma914.ifalara.local  |
 
-## 3. Implementação dos Serviços de Rede (Cada serviço uma sessão)
 
-###### A CONFIGURAÇÃO DE HARDWARE UTILIZADA EM CADA MV:
+### 2.3. Edição dos hostnames com o nome de domínio (tabela anterior) no S.O. de cada MV:
 
-|               **GW :**               |               **SMB :**              |
-|:------------------------------------:|:------------------------------------:|
-| System load: 0.0                     | System load:0.0                      |
-| Processes: 198                       | Processes: 211                       |
-| Usage of/: 37.4% of 18.57GB          | Usage of /: 38.5% of 18.57GB         |
-| Users logged in: 0                   | Users logged in: 0                   |
-| Memory usage: 22%                    | Memory usage: 27%                    |
-| IPv4 address for ens160: 10.9.14.114 | IPv4 address for ens160: 10.9.14.225 |
-| Swap usage:0%                        | Swap usage: 0%                       |
-|               **NS1 :**              |               **NS2 :**              |
-| System load: 0.0                     | System load: 0.0                     |
-| Processes: 204                       | Processes: 204                       |
-| Usage of /: 38.4% of 18.57GB         | Usage of /: 39.1% of 18.57GB         |
-| Users logged in: 0                   | Users logged in: 1                   |
-| Memory usage: 25%                    | Memory usage: 24%                    |
-| IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
-| Swap usage: 0%                       | Swap usage: 0%                       |
-
-###### Primeiro edite os hostnames com o nome de domínio(tabela 3) no S.O. de cada MV:
-- Na VM 10.9.14.225 : 
-
+- VM 10.9.14.225 (samba - smb): 
+```
 $ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
+```
 
-- Na VM 10.9.14.114 :
-
+- VM 10.9.14.114 (gateway - gw):
+```
 $ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
+```
 
-- Na VM 10.9.14.101 :
-
+- VM 10.9.14.101 (nameServer1 - ns1):
+```
 sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
+```
 
-- Na VM 10.9.14.113 :
-
+- VM 10.9.14.113 (nameServer2 - ns2):
+```
 $ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
+```
 
-###### **ROTEIRO:** 
-3.1.
+### 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
 
-3.2. SAMBA: 
-- Nesse roteiro o servidor samba foi configurado na VM(10.9.14.225)
+## 3. Implementação dos Serviços de Rede (cada serviço uma sessão)
+
+### **ROTEIRO:** 
+### 3.1. Instalação do Gateway Server NAT:
+
+*Nesse roteiro o servidor Gateway como NAT foi configurado na VM (10.9.14.114)*
+
+### 3.2. Instalação do SAMBA: 
+
+*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.225)*
 
 - Utilize as informações das tabelas para modificar o arquivo por meio do comando $sudo nano /etc/netplan/00-installer-config.yaml : 
 network:
@@ -127,7 +157,13 @@ smbd.service - Samba SMB Daemon
 
 - 
 
-3.3 Ns1 e Ns2 : 
+### 3.3. Configuração da rede interna LAN nas VMs;
 
-## Considerações Finais:
+### 3.4. Configuração do DNS Master (ns1) e DNS Slave (ns2): 
+
+*Nesse roteiro o DNS Master foi configurado na VM (ns1 - 10.9.14.101) e o DNS Slave foi configurado na VM (ns2 - 10.9.14.113)*
+
+### 3.5. Implementação do servidor Web LAMP:
+
+## 4. Considerações Finais:
     Esse repositório será atualizado de acordo com o andamento do projeto. 
