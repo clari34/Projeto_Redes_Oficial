@@ -325,7 +325,7 @@ De acordo com nossa tabela de IP, definida no início do projeto, **nossa máqui
 A configuração do *slave* é bem simples, começamos configurando o arquivo *yaml* da pasta */etc/netplan*, para que a máquina *slave* tenha o DNS Master como Server (o principal). Para isso entre na pasta (```cd /etc/netplan```) e use o comando a seguir para entrar no arquivo de configuração das interfaces:
 
 ```
-sudo nano /etc/bind/named.conf.local
+sudo sudo nano 00-installer-config-yaml
 ```
 
 Depois use o comando abaixo para salvar o arquivo:
@@ -387,6 +387,7 @@ DNS Slave configurado!
 ## 3.2. CONFIGURAÇÃO DAS INTERFACES DOS HOSTS PARA USAR O DNS
 
 Para configurar a a interface do host local para que o servidor DNS consultado seja o que cofiguramos devemos entrar na pasta */etc/netplan* com o comando ```cd /etc/netplan```, lá existe o arquivo de configuração das interfaces, o *yaml*, iremos modificá-lo. Para modificar o arquivo execute o comando 
+
 ´´´
 sudo nano /etc/netpan/00-installer-config-yaml
 ´´´
@@ -402,6 +403,7 @@ Altere o *addresses* colocando o IP do seu servidor DNS e na área *search* colo
 **Para este exemplos iremos configurar a VM ns1 de IP 10.9.14.114**
 
 Para salvar o arquivo use o comando
+
 ```
 sudo netplan apply
 ``` 
@@ -692,29 +694,34 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
      ![ping6_dirt](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping6_dirt.jpg)
 
 
--**ZONA REVERSA**
+- **ZONA REVERSA**
 
      Nesses exemplos utilizaremos o IP da interface *ens192*
 
      - VM do GW (192.168.14.17):
 
      ![ping1_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping1_rev.jpg)
+     
 
      - VM do SAMBA (192.168.14.18):
 
      ![ping2_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping2_rev.jpg)
+     
 
      - VM do NS1 (192.168.14.19):
 
      ![ping3_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping3_rev.jpg)
+     
 
      - VM do NS2 (192.168.14.20):
 
      ![ping4_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping4_rev.jpg)
+     
 
      - VM do WWW (192.168.14.21):
 
      ![ping5_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping5_rev.jpg)
+     
 
      - VM do BD (192.168.14.22):
 
