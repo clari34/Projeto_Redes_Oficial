@@ -87,42 +87,42 @@ Depois reinicie a máquina e verfique a mudança de nome com o comando ```hostna
 $ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host1.jpg)
 
 - VM 10.9.14.114 (samba - smb): 
 ```
 $ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host2.jpg)
 
 - VM 10.9.14.101 (nameServer1 - ns1):
 ```
 sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host3.jpg)
 
 - VM 10.9.14.225 (nameServer2 - ns2):
 ```
 $ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host4.jpg)
 
 - VM 10.9.14.215 (web - www):
 ```
 $ sudo hostnamectl set-hostname www.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host5.jpg)
 
 - VM 10.9.14.216 (banco - bd):
 ```
 $ sudo hostnamectl set-hostname bd.grupo3.turma914.ifalara.local
 ```
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host6.jpg)
 
 
 ## 2.3. A configuração de hardware utilizada em cada VM:
@@ -131,37 +131,37 @@ Essas configurações de hardware paracem logo no início, quando entramos na VM
 
 - VM do GW (10.9.14.113):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img1.jpg)
 
 - VM do SAMBA (10.9.14.114):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img2.jpg)
 
 - VM do NS1 (10.9.14.101):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img3.jpg)
 
 - VM do NS2 (10.9.14.225):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img4.jpg)
 
 - VM do WWW (10.9.14.215):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img5.jpg)
 
 - VM do BD (10.9.14.216):
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img6.jpg)
 
 ## 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM:
 
-Para cada VM criamos 5 usuários que se referem a cada integrante do grupo, vamos mostrar apenas o exemplo da VM do SAMBA (10.9.14.114), mas se quiser observar em cada VM [clique aqui]()!
+Para cada VM criamos 5 usuários que se referem a cada integrante do grupo, vamos mostrar apenas o exemplo da VM do SAMBA (10.9.14.114), mas se quiser observar em cada VM [clique aqui](https://github.com/clari34/Projeto_Redes_Oficial/tree/main/defini%C3%A7%C3%B5es%20iniciais/criar_users)!
 
 Para criar um usuário usamos o comando ```sudo adduser nomeUsuario```
 
-No nosso caso foi 5 usuários (Isabel, Jeycy, Clara, Dudha, Lavynia). Observe na imagem a seguir que esses usuários foram realmente criados, para isso utilize o comando ```getent passwd```
+No nosso caso foi 5 usuários (Isabel, Jeycy, Clara, Dudha, Lavynia). Observe na imagem a seguir que esses usuários foram realmente criados, para isso utilize o comando ```getent passwd``` Esse comando mostrará todos os *users* da máquina.
 
-![]()
+![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/criar_users/user2.jpg)
 
 
 # 3. Implementação dos Serviços de Rede (cada serviço uma sessão)
