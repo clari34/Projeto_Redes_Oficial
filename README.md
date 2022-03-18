@@ -732,7 +732,314 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
 
 ## 3.2. Instalação do SAMBA: 
 
-*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.101)* 
+### 3.2.1. Intalação e configuração do SAMBA
+
+Como sabemos o SAMBA é o serviço de compartilhamento do LINUX. Agora iremos realizar a instalação e configuração deste serviço na nossa máquina **smb de IP  10.9.14.101**, como foi especificado nas tabelas.
+
+Primeiro deveremos atualizar a máquina com o comando abaixo para que o serviço seja instalado em um máquina atualizada.
+
+```
+sudo apt update
+```
+
+Antes de começar mostraremos o nome da máquina e seu IP  e mostraremos que a máquina está usando o DNS Server que implementamos.
+
+Para ver o nome da máquina
+
+```
+hostname
+```
+
+Para ver os IPs da máquina
+
+```
+hostname -I
+```
+
+E para visualizar o DNS Server da máquina:
+
+```
+systemd-resolve --status ens160
+```
+
+![img1]()
+
+Agora inicie a instalação do serviço com o comando
+
+```
+sudo apt install samba
+```
+
+Após a instalação veja com o comando a seguir o caminho do serviço instalado para ter certeza da instalação. Cuidado! Verique se é esse caminho da imagem abaixo:
+
+```
+whereis samba 
+```
+
+![img2]()
+
+Veja o funcionamento do samba com o comando abaixo
+
+```
+sudo systemctl smbd
+```
+
+![img3]()
+
+Como sabemos o serviço de compartilhamento funciona nas portas 445 e 139, sendo assim, como instalamos o samba elas devem estar funcionando! Para verificar o funcionamento das portas mencionadas digitamos o comando a seguir na linha de comando.
+
+```
+netstat -an | grep LISTEN
+```
+
+![img4]()
+
+Até aqui o que fizemos foi a instalação do serviço, agora precisamos configurá-lo!!!! 
+Para isso prescisamos do arquivo de configuração (que é o *smb.conf*), para fazer o backup do mesmo executamos o comando
+
+```
+sudo cp/etc/samba/smb.conf{,.backup}
+```
+
+Depois veja se o aqruivo foi criado utilizando o comando ```ls -la``` dentro da pasta */etc/samba*. Observe a seguir
+
+![img5]()
+
+O arquivo de configuração do samba vem com muitos comentários (;) e tralhas (#), para retirarmos essas coisas e deixar apenas o que é necessário utilizamos o comando a seguir
+
+```
+sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf.backup | grep . > /etc/samba/smb.conf'
+```
+
+Agora devremos editar este arquivo, para isso utilize o comando 
+
+```
+sudo nano /etc/samba/smb.conf
+``` 
+
+> IMPORTANTE: Todo arquivo de configuração respeita uma identação, eles obedecem uma ordem hierárquica, e alguns deles não aceitam a utilização do TAB, esse é o caso desse arquivo, portanto, não use TAB!
+
+A seguir é mostrado o que foi configurado na área [global], e as duas outras que foram adicionadas, a [home] e [public]
+
+![img6]()
+
+```
+[global]
+   workgroup = WORKGROUP
+   netbios name = smb
+   security = user
+   server string = %h server (Samba, Ubuntu)
+   interfaces = 127.0.0.1/8 ens160 ens192
+   bind interfaces only = yes
+   log file = /var/log/samba/log.%m
+   max log size = 1000
+   logging = file
+   panic action = /usr/share/samba/panic-action %d
+   server role = standalone server
+   obey pam restrictions = yes
+   unix password sync = yes
+   passwd program = /usr/bin/passwd %u
+   passwd chat = Enter\snew\s\spassword:* %n\n Retype\snew\s\spassword:* %n\n password\supdated\ssuccessfully .
+   pam password change = yes
+   map to guest = bad user
+   usershare allow guests = yes
+[printers]
+   comment = All Printers
+   browseable = no
+   path = /var/spool/samba
+   printable = yes
+   guest ok = no
+   read only = yes
+   create mask = 0700
+[print$]
+   comment = Printer Drivers
+   path = /var/lib/samba/printers
+   browseable = yes
+   read only = yes
+   guest ok = no
+[homes]
+   comment = Home Directories
+   browseable = yes
+   read only = no
+   create mask = 0700
+   directory mask = 0700
+   valid users = %S
+[public]
+   comment = public anonymous access
+   path = /samba/public
+   browsable =yes
+   create mask = 0660
+   directory mask = 0771
+   writable = yes
+   guest ok = no
+   guest only = yes
+   force user = nobody
+   force create mode = 0777
+   force directory mode = 0777
+```
+
+Depois de configurado precisamos reiniciar o serviço e ver o status do mesmo, para isso utilize os dois comando a seguir
+
+Para reiniciar
+```
+sudo systemctl restart smbd
+```
+
+Para verificar o funcionamento
+```
+sudo systemctl status smbd
+```
+
+Verifique o funcionamento das interfaces que foram adcionadas no arquivo de configuração (*a loopback, ens160 e ens192*), para isso use o comando 
+
+```
+netstat -an | grep LISTEN
+```
+
+Perceba na imagem a seguir que as nossas interfaces estão funcionando nas portas 139 e 445, que são as portas utilizadas pelo samba :)
+
+![img7]()
+
+> IMPORTANTE: os passos a seguir deverão ser realizados na RAIZ da máquina. Para isso digite **cd /** no prompt de comando do seu terminal.
+
+No arquivo de configuração colocamos que a área [public] estava na pasta */samba/public*, se verificarmos com o comando ```ls -la``` ainda não possuímos esta pasta, portanto deveremos criá-la (na RAIZ da VM). Utilize o comando a seguir para criar a árvore de diretório e depois veja se ela foi criada
+
+*OBS: usando o **-p** no comando mkdir criamos a árvore de diretório que já cria as duas pastas, mas você pode criara uma por uma também :)*
+
+```
+sudo mkdir -p /samba/public
+```
+
+![img8]()
+
+Agora vamos realizar as configurações de acesso, leitura e escrita da pasta *public*
+
+- Perceba na imagem anterior que o acesso a pasta *public* é somente so usuário *root*, para permitir que qualquer usuário possa acessar a pasta *public* usamos o comando comando a seguir 
+
+```
+sudo chown -R nobody:nogroup /samba/public
+```
+
+![img9]()
+
+
+- Usamos o comando abaixo para dar total acesso de leitura e escrita.
+
+```
+sudo chmod -R 0775 /samba/public
+``` 
+
+*Compare com a imagem anterior para observar a mudança*
+
+![img10]()
+
+
+- Agora devemos afirmar que somente os usuários que pertencem ao grupo do samba é que podem ter acesso a pasta *public* (denominamos o grupo como *sambashare*). Para realizar essa permissão e criar o grupo utilize o comando 
+
+```
+sudo chgrp sambashare /samba/public
+```
+
+*Compare com a imagem anterior para observar a mudança*
+
+![img11]()
+
+
+- Para tornar válidos somente os usuários pertencentes ao grupo *sambashare* devemos mudar o arquivo de configuração do samba (o smb.conf), na área *[public]*. Para entrar no arquivo use o comando
+
+```
+sudo nano /etc/samba/smb.conf
+```
+
+![img12]()
+
+Agora use o comando abaixo para reinicar a máquina
+
+```
+sudo systemctl restart smbd
+```
+
+E depois veja o status do samba com o comando a seguir
+
+```
+sudo systemctl status smbd 
+```
+
+Agora deveremos criar usuários para participar do grupo *sambashare*. Para criar um usuário utilize o comando
+
+```
+sudo adduser nomeUsuario
+```
+
+*OBS: nós já criamos todos os nossos usuários, 5 na verdade, são eles: isabel, clara, jeycy, dudha e lavynia. Todos eles com a senha "aluno" (anote essas informações)*
+
+CONTINUANDO....
+
+Criados os usuários devemos vinculá-los ao samba, para isso use o comando a seguir
+
+```
+sudo smbpasswd -a nomeUsuario
+```
+
+*Nós iremos cincular todos os usuários ao samba*
+
+![img13]()
+
+Esse comando irá pedir uma senha (anote-a)!!!
+
+*A nossa senha foi "aluno" para todos os usuários*
+
+Com o comando anterior apenas vinculamos os usuários ao serviço samba, agora deveremos adicionar estes usuários ao grupo *sambashare*, para isso use o comando abaixo
+
+```
+sudo usermod -aG sambashare nomeUsuario
+```
+
+*Adicionamos todos os usuários criados ao grupo!*
+
+![img14]()
+
+> PARA SABER MAIS: Os usuários que foram criados com o comando *sudo adduser nomeUsuario* são usuários comuns como quaisquer outros, para que eles deixem de ser "normais" e tenham acesso e vínculo ao samba é que devemos executar os dois comandos anteriores.
+
+Agora verifiquemos quem faz parte do grupo *sambashare* utilizando o comando a seguir
+
+```
+getent group | grep SAMBASHARE
+```
+
+![img15]()
+
+PRONTO! Samba instalado e configurado com sucesso! A seguir vamos testar o serviço.
+
+### 3.2.2. Testes de compartilhamento SAMBA
+
+Para testar o compartilhamento entre a máquina Linux e o Windowns através do SAMBA, devemos estar com a nossa OpenVPN aberta e ligada, usamos também um terminal ssh, o PuTTy.
+
+Primeiro devemos nos conectar à VPN, depois clique no Windows Explorer e digite o IP ou nome da VM na barra de endereços, nesse formato **\\ip**:
+
+![test1]()
+
+Se você consegue ver as pastas significa que você se conectou com a sua VM Linux! Mas para testar o SAMBA, clique na pasta *public*, irá aparecer uma tela para login, digite o nome de usuário e a senha (criada no comando de vínculo entre usuário e samba).
+
+Iremos usar o nosso usuário "clara", de senha "aluno" (todos os nossos 5 usuários tem essa senha).
+
+![test2]()
+
+Se você entrar na pasta *public* é porque funcionou!!!!
+
+![test3]()
+
+*Em outros testes já criamos duas pastas :)*
+
+Mas vamos criar outra, para fazer isso é como criar qualquer outra pasta no Windows.
+
+PRONTO!
+
+Como as mudanças ocorrem de forma automática, vamos verificar a criação desta nova pasta no teriminal:
+
+![test4]()
+
+SAMBA testado com sucesso!!!!
 
 ## 3.3. Implementação do servidor Web LAMP:
 
