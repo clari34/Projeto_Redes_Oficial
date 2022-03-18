@@ -168,7 +168,7 @@ No nosso caso foi 5 usuários (Isabel, Jeycy, Clara, Dudha, Lavynia). Observe na
 
 ## 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2): 
 
-## 3.1.1. DNS MASTER
+### 3.1.1. DNS Master
 
 Iremos configurar como nameserver master a nossa máquina **ns1 de Ip 10.9.14.114**. Conforme a tabela de IPs configurada para este projeto.
 
@@ -208,7 +208,7 @@ Depois de executar o comando verifique se a pasta criada já está no diretório
 
 ![img2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/img2.jpg)
 
-### ZONAS
+#### ZONAS
 
 Como já vimos as zonas especificam o domínio e podem ser zonas de conversão direta (de nome para IP) ou zonas de conversão reversa (de IP para nome). Agora vamos criar essas zonas!
 
@@ -316,7 +316,7 @@ PRONTO!
 DNS Master configurado!
 
 
-## 3.1.2. DNS SLAVE
+### 3.1.2. DNS Slave
 
 Fizemos a configuração do nosso DNS Master agora faremos as configurações do Slave. Ele será nosso servidor DNS secundário, como se fosse "uma cópia do Master", o que de fato ele é :)
 
@@ -384,7 +384,7 @@ PRONTO!
 DNS Slave configurado!
 
 
-## 3.2. CONFIGURAÇÃO DAS INTERFACES DOS HOSTS PARA USAR O DNS
+### 3.1.3. Configuração das interfaces dos hosts
 
 Para configurar a a interface do host local para que o servidor DNS consultado seja o que cofiguramos devemos entrar na pasta */etc/netplan* com o comando ```cd /etc/netplan```, lá existe o arquivo de configuração das interfaces, o *yaml*, iremos modificá-lo. Para modificar o arquivo execute o comando 
 
@@ -397,6 +397,8 @@ sudo nano /etc/netpan/00-installer-config-yaml
 Para que possamos usar o BIND como nosso servidor DNS, deveremos alterar o ***endereço nameserver*** da interface ens160. 
 
 Altere o *addresses* colocando o IP do seu servidor DNS e na área *search* coloque nos cochetes [] o nome de domínio que você configurou!
+
+Além de configurar o para usarmos nosso próprio DNS, também iremos configurar nessa sessão a interface *ens192* para recebe o IP que foi programado na tabela.
 
 *Para sair do arquico aperte ctrl+x e y.*
 
@@ -449,11 +451,11 @@ A seguir as imagens das configurações do arquivo *yaml* de todas as nossas VMs
 ![img19](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/img19.jpg)
 
 
-## 3.3. TESTES do DNS
+### 3.1.4. TESTES do DNS
 
 Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quanto a reversa, e forçando usar o nosso DNS Master e Slave:
 
-### 3.3.1. DIG 
+#### 3.1.4.1. DIG 
 
 - **ZONA DIRETA**
 
@@ -559,7 +561,7 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
      ![dig6_2_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/dig6_2_rev.jpg)
 
 
-### 3.3.2. NSLOOKUP
+#### 3.1.4.2. NSLOOKUP
 
 - **ZONA DIRETA**
 
@@ -665,7 +667,7 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
      ![kup6_2_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/kup6_2_rev.jpg)
 
 
-### 3.3.3. PING 
+#### 3.1.4.3. PING 
 
 - **ZONA DIRETA**
 
