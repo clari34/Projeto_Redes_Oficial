@@ -504,7 +504,7 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
 
      - VM do BD (10.9.14.216) @ns2:
 
-     ![dig6_2_dirt](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/di6_2_dirt.jpg)
+     ![dig6_2_dirt](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/dig6_2_dirt.jpg)
 
 
 - **ZONA REVERSA**
