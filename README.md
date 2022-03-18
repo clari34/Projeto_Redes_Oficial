@@ -23,7 +23,7 @@
      - [X] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
 - [ ] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
      - [X] 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2);
-     - [ ] 3.2. Instalação do SAMBA;
+     - [X] 3.2. Instalação do SAMBA;
      - [ ] 3.3. Implementação do servidor Web LAMP;
      - [ ] 3.4. Instalação do Gateway Server NAT;
      - [ ] 3.5. Configuração da rede interna LAN nas VMs;
@@ -762,7 +762,7 @@ E para visualizar o DNS Server da máquina:
 systemd-resolve --status ens160
 ```
 
-![img1]()
+![img1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img1.jpg)
 
 Agora inicie a instalação do serviço com o comando
 
@@ -776,7 +776,7 @@ Após a instalação veja com o comando a seguir o caminho do serviço instalado
 whereis samba 
 ```
 
-![img2]()
+![img2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img2.jpg)
 
 Veja o funcionamento do samba com o comando abaixo
 
@@ -784,7 +784,7 @@ Veja o funcionamento do samba com o comando abaixo
 sudo systemctl smbd
 ```
 
-![img3]()
+![img3](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img3.jpg)
 
 Como sabemos o serviço de compartilhamento funciona nas portas 445 e 139, sendo assim, como instalamos o samba elas devem estar funcionando! Para verificar o funcionamento das portas mencionadas digitamos o comando a seguir na linha de comando.
 
@@ -792,7 +792,7 @@ Como sabemos o serviço de compartilhamento funciona nas portas 445 e 139, sendo
 netstat -an | grep LISTEN
 ```
 
-![img4]()
+![img4](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img4.jpg)
 
 Até aqui o que fizemos foi a instalação do serviço, agora precisamos configurá-lo!!!! 
 Para isso prescisamos do arquivo de configuração (que é o *smb.conf*), para fazer o backup do mesmo executamos o comando
@@ -803,7 +803,7 @@ sudo cp/etc/samba/smb.conf{,.backup}
 
 Depois veja se o aqruivo foi criado utilizando o comando ```ls -la``` dentro da pasta */etc/samba*. Observe a seguir
 
-![img5]()
+![img5](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img5.jpg)
 
 O arquivo de configuração do samba vem com muitos comentários (;) e tralhas (#), para retirarmos essas coisas e deixar apenas o que é necessário utilizamos o comando a seguir
 
@@ -821,7 +821,7 @@ sudo nano /etc/samba/smb.conf
 
 A seguir é mostrado o que foi configurado na área [global], e as duas outras que foram adicionadas, a [home] e [public]
 
-![img6]()
+![img6](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img6.jpg)
 
 ```
 [global]
@@ -898,7 +898,7 @@ netstat -an | grep LISTEN
 
 Perceba na imagem a seguir que as nossas interfaces estão funcionando nas portas 139 e 445, que são as portas utilizadas pelo samba :)
 
-![img7]()
+![img7](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img7.jpg)
 
 > IMPORTANTE: os passos a seguir deverão ser realizados na RAIZ da máquina. Para isso digite **cd /** no prompt de comando do seu terminal.
 
@@ -910,7 +910,7 @@ No arquivo de configuração colocamos que a área [public] estava na pasta */sa
 sudo mkdir -p /samba/public
 ```
 
-![img8]()
+![img8](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img8.jpg)
 
 Agora vamos realizar as configurações de acesso, leitura e escrita da pasta *public*
 
@@ -920,7 +920,7 @@ Agora vamos realizar as configurações de acesso, leitura e escrita da pasta *p
 sudo chown -R nobody:nogroup /samba/public
 ```
 
-![img9]()
+![img9](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img9.jpg)
 
 
 - Usamos o comando abaixo para dar total acesso de leitura e escrita.
@@ -931,7 +931,7 @@ sudo chmod -R 0775 /samba/public
 
 *Compare com a imagem anterior para observar a mudança*
 
-![img10]()
+![img10](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img10.jpg)
 
 
 - Agora devemos afirmar que somente os usuários que pertencem ao grupo do samba é que podem ter acesso a pasta *public* (denominamos o grupo como *sambashare*). Para realizar essa permissão e criar o grupo utilize o comando 
@@ -942,7 +942,7 @@ sudo chgrp sambashare /samba/public
 
 *Compare com a imagem anterior para observar a mudança*
 
-![img11]()
+![img11](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img11.jpg)
 
 
 - Para tornar válidos somente os usuários pertencentes ao grupo *sambashare* devemos mudar o arquivo de configuração do samba (o smb.conf), na área *[public]*. Para entrar no arquivo use o comando
@@ -951,7 +951,7 @@ sudo chgrp sambashare /samba/public
 sudo nano /etc/samba/smb.conf
 ```
 
-![img12]()
+![img12](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img12.jpg)
 
 Agora use o comando abaixo para reinicar a máquina
 
@@ -983,7 +983,7 @@ sudo smbpasswd -a nomeUsuario
 
 *Nós iremos cincular todos os usuários ao samba*
 
-![img13]()
+![img13](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img13.jpg)
 
 Esse comando irá pedir uma senha (anote-a)!!!
 
@@ -997,7 +997,7 @@ sudo usermod -aG sambashare nomeUsuario
 
 *Adicionamos todos os usuários criados ao grupo!*
 
-![img14]()
+![img14](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img14.jpg)
 
 > PARA SABER MAIS: Os usuários que foram criados com o comando *sudo adduser nomeUsuario* são usuários comuns como quaisquer outros, para que eles deixem de ser "normais" e tenham acesso e vínculo ao samba é que devemos executar os dois comandos anteriores.
 
@@ -1007,7 +1007,7 @@ Agora verifiquemos quem faz parte do grupo *sambashare* utilizando o comando a s
 getent group | grep SAMBASHARE
 ```
 
-![img15]()
+![img15](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/img15.jpg)
 
 PRONTO! Samba instalado e configurado com sucesso! A seguir vamos testar o serviço.
 
@@ -1017,27 +1017,27 @@ Para testar o compartilhamento entre a máquina Linux e o Windowns através do S
 
 Primeiro devemos nos conectar à VPN, depois clique no Windows Explorer e digite o IP ou nome da VM na barra de endereços, nesse formato **\\ip**:
 
-![test1]()
+![test1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/test1.jpg)
 
 Se você consegue ver as pastas significa que você se conectou com a sua VM Linux! Mas para testar o SAMBA, clique na pasta *public*, irá aparecer uma tela para login, digite o nome de usuário e a senha (criada no comando de vínculo entre usuário e samba).
 
 Iremos usar o nosso usuário "clara", de senha "aluno" (todos os nossos 5 usuários tem essa senha).
 
-![test2]()
+![test2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/test2.jpg)
 
 Se você entrar na pasta *public* é porque funcionou!!!!
 
-![test3]()
+*Em outros testes (teste para o teste) já criamos duas pastas :)
 
-*Em outros testes já criamos duas pastas :)*
+![test3](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/test3.jpg)
 
 Mas vamos criar outra, para fazer isso é como criar qualquer outra pasta no Windows.
 
-PRONTO!
-
 Como as mudanças ocorrem de forma automática, vamos verificar a criação desta nova pasta no teriminal:
 
-![test4]()
+![test5](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/samba/test5.jpg)
+
+A terceira pasta foi criada!!!!
 
 SAMBA testado com sucesso!!!!
 
