@@ -32,7 +32,7 @@
 
 # 1. Introdução
 
-  O seguinte trabalho consiste na configuração dos serviços DNS Master e Slave através de um terminal linux, com o objetivo de criar um ambiente de rede virtualizaado com seis máquinas virtuais.
+  O seguinte trabalho consiste na configuração dos serviços DNS Master e Slave, Samba, Gateway NAT e Web LAMP através de um terminal linux, com o objetivo de criar um ambiente de rede virtualizado com seis máquinas virtuais. O acesso ao terminal linux é feito via VPN, onde os servidores são máquinas virtuais acessadas remotamente através do OpenVPN, e se encontram rodando no laboratório virtual, a nuvem. Por meio do aplicativo OpenVPN, as máquinas virtuais já criadas podem ser acessadas através do arquivo vpn914.labredes.arairaca.ifal.edu.br.ovpn e, com os dados do IP do host e o número da porta, no terminal linux, é possível conectar ao OpenVPn e depois acessar a máquina com o login: administrador@ip_da_máquina, e a senha: adminifal. Por fim, todos os serviços objetivados por esse projeto podem ser realizados.
 
   O DNS (Domain Name Service) é um sistema de base de dados distribuído que traduz nomes para endereços IP e que permite que um URL como, por exemplo, www. algumaacoisa.edu.br seja traduzido para o endereço 200.131.62.17. Além disso, a configuração split DNS serve para atender de modo diferenciado a diferentes segmentos de rede, podendo responder à consulta de um URL com endereços IP diferentes ou traduzindo diferentes conjuntos de nomes. Para a configuração de um sistema, a zona Slave é utilizada quando o usuário tem dois ou mais servidores de DNS, fazendo a replicação da zona a partir da zona Master que, por sua vez, é onde se fazem as modificações referentes ao domínio e acrescentando as definições para a trasferência de dados paa o servidor Slave.
 
@@ -40,9 +40,9 @@
   
   O Gateway NAT (Network Address Translation) consiste em um serviço de conversão de endereços de rede que serve para que as instâncias em uma sub-rede privada possam se conectar a serviços fora da VPC, mas sem permitir que os serviço externos iniciem uma conexão com essas instâncias. Esse serviço substitui o endereço IP de origem das instâncias pelo endereço IP do gateway e, com isso, o dispositivo de NAT converte os endereços de volta para o endereço IP de origem inicial.
   
-  Já o Web LAMP é uma combinação de softwares de código aberto, que foi uma das primeiras plataformas de código aberto para a rede, e continua sendo uma das maneiras mais comuns de fornecer aplicações web. Além disso, sua nomenclatura é um acrônimo reunindo as iniciais de seus quatro componentes base: Linux, Apache, MySQL e PHP e é considerado por muitos como a melhor plataforma disponível para o desenvolvimento de novos aplicativos web personalizados, devido a ser uma plataforma estável, simples, poderosa, dentre outros adjetivos usados para descrever o LAMP.  
+  Já o Web LAMP é uma combinação de softwares de código aberto, que foi uma das primeiras plataformas de código aberto para a rede, e continua sendo uma das maneiras mais comuns de fornecer aplicações web. Além disso, sua nomenclatura é um acrônimo reunindo as iniciais de seus quatro componentes base: Linux, Apache, MySQL e PHP e é considerado por muitos como a melhor plataforma disponível para o desenvolvimento de novos aplicativos web personalizados, devido a ser uma plataforma estável, simples, poderosa, dentre outros adjetivos usados para descrever o LAMP. 
   
-  Dessa forma, o roteiro é baseado, inicialmente, em tabelas que possuem os endereços IP's de cada interface de rede.
+  Dessa forma, o roteiro é baseado em tabelas que possuem os endereços IP's de cada interface de rede, assim como os nomes dos domínios de cada serviço implementado e o IP da máquina respectiva, e prints do passo a passo de cada implementação realizadas, além de testes que provam o funcionamento dos serviços. 
   
 # 2. Definições Iniciais
 
@@ -78,7 +78,7 @@
 
 ## 2.2. Edição dos hostnames com o nome de domínio no S.O. de cada MV:
 
-Utilizando as infromações da tabela FQDN (tabela anterior) iremos mudar os nomes de cada VM. Para isso utilizaremos o comando ```sudo hostnamectl set-hostname nome.dominio```
+Utilizando as informações da tabela FQDN (tabela anterior) iremos mudar os nomes de cada VM. Para isso utilizaremos o comando ```sudo hostnamectl set-hostname nome.dominio```
 
 Depois reinicie a máquina e verfique a mudança de nome com o comando ```hostname```
 
