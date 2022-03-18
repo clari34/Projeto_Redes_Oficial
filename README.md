@@ -1,38 +1,36 @@
-# Instituto Federal de Alagoas - Campus Arapiraca
+# PROJETO FINAL
+
+### Instituto Federal de Alagoas - Campus Arapiraca
 ### Disciplina de Infraestrutura e Serviços de Rede
 ### Prof. Alaelson Jatobá
-### Turma 914
+### Turma 914 | 2021
 
-#### ALUNAS :
-|          |           **GRUPO 3**           |
-|:--------:|:-------------------------------:|
-|          |                                 |
-|          | _NOME DOS INTEGRANTES:_         |
-| ALUNA 1: | Jeycy Karollaynny Silva Almeida |
-| ALUNA 2: | Marya Eduardha Freitas Pereira  |
-| ALUNA 3: | Ana Clara Silva Nunes           |
-| ALUNA 4: | Isabel Vitória da Silva Gama    |
-| ALUNA 5: | Lavynia Farias Santos           |
-|          |                                 |
+### Grupo 3:
 
+- Ana Clara Silva Nunes;
+- Isabel Vitória da Silva Gama;
+- Jeycy Karollaynny Silva Almeida;
+- Lavynia Farias Santos;
+- Marya Eduardha Freitas Pereira.
 
-## Sumário
+# Sumário
 
 - [X] 1. Introdução;
-- [ ] 2. Definições Iniciais:
-     - [X] 2.1. A configuração de hardware utilizada em cada VM;
-     - [X] 2.2. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs;
-     - [ ] 2.3. Edição dos hostnames com o nome de domínio (tabela anterior) no S.O. de cada MV;
-     - [ ] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
+- [X] 2. Definições Iniciais:
+     - [X] 2.1. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs;
+     - [X] 2.2. Edição dos hostnames com o nome de domínio no S.O. de cada MV;
+     - [X] 2.3. A configuração de hardware utilizada em cada VM;
+     - [X] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
 - [ ] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
-     - [ ] 3.1. Instalação do Gateway Server NAT;
+     - [ ] 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2);
      - [ ] 3.2. Instalação do SAMBA;
-     - [ ] 3.3. Configuração da rede interna LAN nas VMs;
-     - [ ] 3.4. Configuração do DNS Master (ns1) e DNS Slave (ns2);
-     - [ ] 3.5. Implementação do servidor Web LAMP;
+     - [ ] 3.3. Implementação do servidor Web LAMP;
+     - [ ] 3.4. Instalação do Gateway Server NAT;
+     - [ ] 3.5. Configuração da rede interna LAN nas VMs;
 - [ ] 4. Considerações Finais; 
+- [ ] 5. Referências; 
 
-## 1. Introdução
+# 1. Introdução
 
   O seguinte trabalho consiste na configuração dos serviços DNS Master e Slave através de um terminal linux, com o objetivo de criar um ambiente de rede virtualizaado com seis máquinas virtuais.
 
@@ -46,130 +44,146 @@
   
   Dessa forma, o roteiro é baseado, inicialmente, em tabelas que possuem os endereços IP's de cada interface de rede.
   
-## 2. Definições Iniciais
+# 2. Definições Iniciais
 
+## 2.1. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs:
 
-### 2.1. A configuração de hardware utilizada em cada VM:
+**CONFIGURAÇÃO das INTERFACES de REDE:**
 
-|               **GW :**               |               **SMB :**              |
-|:------------------------------------:|:------------------------------------:|
-| System load: 0.0                     | System load:0.0                      |
-| Processes: 198                       | Processes: 211                       |
-| Usage of/: 37.4% of 18.57GB          | Usage of /: 38.5% of 18.57GB         |
-| Users logged in: 0                   | Users logged in: 0                   |
-| Memory usage: 22%                    | Memory usage: 27%                    |
-| IPv4 address for ens160: 10.9.14.114 | IPv4 address for ens160: 10.9.14.225 |
-| Swap usage:0%                        | Swap usage: 0%                       |
-|               **NS1 :**              |               **NS2 :**              |
-| System load: 0.0                     | System load: 0.0                     |
-| Processes: 204                       | Processes: 204                       |
-| Usage of /: 38.4% of 18.57GB         | Usage of /: 39.1% of 18.57GB         |
-| Users logged in: 0                   | Users logged in: 1                   |
-| Memory usage: 25%                    | Memory usage: 24%                    |
-| IPv4 address for ens160: 10.9.14.101 | IPv4 address for ens160: 10.9.14.113 |
-| Swap usage: 0%                       | Swap usage: 0%                       |
+|                 |                  |                    |
+| ---             | ---              | ---                |
+| IP de Subrede   | 10.9.14.0 / 24   | 192.168.14.16 / 29 |
+| IP de Broadcast | 10.9.14.255 / 24 | 192.168.14.23 / 29 |
 
+| Nome da VM   | WAN    | IP          | LAN    | IP            |
+|   ---        | :---:  | :---:       | :---:  | :---:         |
+| IP do GW:    | ens160 | 10.9.14.113 | ens192 | 192.168.14.17 |
+| IP do SAMBA: | ens160 | 10.9.14.114 | ens192 | 192.168.14.18 |
+| IP do NS1:   | ens160 | 10.9.14.101 | ens192 | 192.168.14.19 |
+| IP do NS2:   | ens160 | 10.9.14.225 | ens192 | 192.168.14.20 |
+| IP do WEB:   | ens160 | 10.9.14.215 | ens192 | 192.168.14.21 |
+| IP do BD:    | ens160 | 10.9.14.216 | ens192 | 192.168.14.22 |
 
-### 2.2. Tabelas de definições de domínio, com os nomes e os endereços IPs das VMs:
+**DEFINIÇÃO de NOMES e DOMÍNIOS:**
 
-|                    |         | **CONFIGURAÇÕES DAS INTERFACES DE REDE:** |         |                  |
-|--------------------|---------|-------------------------------------------|---------|------------------|
-|                    |         |                                           |         |                  |
-| _IP DA SUBREDE:_   |         | 10.9.14.0/24                              |         | 192.168.14.16/29 |
-| _IP DE BROADCAST:_ |         | 10.9.14.255/24                            |         | 192.168.14.23    |
-| _IP DO GW:_        | ENS 160 | 10.9.14.114                               | ENS 192 | 192.168.14.17    |
-| _IP DO SAMBA:_     | ENS 160 | 10.9.14.225                               | ENS 192 | 192.168.14.18    |
-| _IP DO NS1:_       | ENS 160 | 10.9.14.101                               | ENS 192 | 192.168.14.19    |
-| _IP DO NS2:_       | ENS 160 | 10.9.14.113                               | ENS 192 | 192.168.14.20    |
-| _IP DO WEB_        | ENS 160 |                                           | ENS 192 | 192.168.14.21    |
-| _IP DO BD_         | ENS 160 |                                           | ENS 192 | 192.168.14.22    |
-
-
-|           | **DEFINIÇÃO DE NOMES E DOMÍNIO** |                                   |
-|:---------:|----------------------------------|-----------------------------------|
-| _VM_      | _DOMÍNIO(ZONA)_                  | _grupo3.turma914.ifalara.local_   |
-| Aluno14   | FQDN DO GW:                      | gw.grupo3.turma914.ifalara.local  |
-| Aluno25   | FQDN DO SAMBA:                   | smb.grupo3.turma914.ifalara.local |
+| **VM**    | **DOMÍNIO(ZONA)**                | **grupo3.turma914.ifalara.local** |
+|:--------- |----------------------------------|-----------------------------------|
+| Aluno13   | FQDN DO GW:                      | gw.grupo3.turma914.ifalara.local  |
+| Aluno14   | FQDN DO SAMBA:                   | smb.grupo3.turma914.ifalara.local |
 | Aluno01   | FQDN DO NS1:                     | ns1.grupo3.turma914.ifalara.local |
-| Aluno13   | FQDN DO NS2:                     | ns2.grupo3.turma914.ifalara.local |
+| Aluno25   | FQDN DO NS2:                     | ns2.grupo3.turma914.ifalara.local |
 | Grupo3vm1 | FQDN DO WEB:                     | www.grupo3.turma914.ifalara.local |
 | Grupo3vm2 | FQDN DO BD:                      | bd.grupo3.turma914.ifalara.local  |
 
 
-### 2.3. Edição dos hostnames com o nome de domínio (tabela anterior) no S.O. de cada MV:
+## 2.2. Edição dos hostnames com o nome de domínio no S.O. de cada MV:
 
-- VM 10.9.14.225 (samba - smb): 
+Utilizando as infromações da tabela FQDN (tabela anterior) iremos mudar os nomes de cada VM. Para isso utilizaremos o comando ```sudo hostnamectl set-hostname nome.dominio```
+
+Depois reinicie a máquina e verfique a mudança de nome com o comando ```hostname```
+
+- VM 10.9.14.113 (gateway - gw):
+```
+$ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
+```
+
+![]()
+
+- VM 10.9.14.114 (samba - smb): 
 ```
 $ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
 ```
 
-- VM 10.9.14.114 (gateway - gw):
-```
-$ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
-```
+![]()
 
 - VM 10.9.14.101 (nameServer1 - ns1):
 ```
 sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
 ```
 
-- VM 10.9.14.113 (nameServer2 - ns2):
+![]()
+
+- VM 10.9.14.225 (nameServer2 - ns2):
 ```
 $ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
 ```
 
-### 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
+![]()
 
-## 3. Implementação dos Serviços de Rede (cada serviço uma sessão)
+- VM 10.9.14.215 (web - www):
+```
+$ sudo hostnamectl set-hostname www.grupo3.turma914.ifalara.local
+```
 
-### **ROTEIRO:** 
-### 3.1. Instalação do Gateway Server NAT:
+![]()
 
-*Nesse roteiro o servidor Gateway como NAT foi configurado na VM (10.9.14.114)*
+- VM 10.9.14.216 (banco - bd):
+```
+$ sudo hostnamectl set-hostname bd.grupo3.turma914.ifalara.local
+```
 
-### 3.2. Instalação do SAMBA: 
+![]()
 
-*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.225)*
 
-- Utilize as informações das tabelas para modificar o arquivo por meio do comando $sudo nano /etc/netplan/00-installer-config.yaml : 
-network:
-  ethernets:
-    ens160:
-      dhcp4: false
-      addresses: [10.9.14.225/24]
-      gateway4: 10.9.14.1
-      nameservers:
-         addresses:
-           - 10.9.14.225
-         search: [smb.grupo3.turma914.ifalara.local]
-    ens192:
-      addresses: [192.168.0.194/29]
-  version: 2
+## 2.3. A configuração de hardware utilizada em cada VM:
 
-- Utilize Ctrl+x para salvar e execute $ sudo netplan apply para ativar as configurações
+Essas configurações de hardware paracem logo no início, quando entramos na VM. Ao fazer login essas informações são exibidas, mostrando carga da CPU, porcentagem de memória, números de processo de execução, porcentagem de disco utilizada, número de usuários logados, ente outras. Veremos com as imagens a seguir as informações de cada máquina.
 
-- Verifique o funcionamento do gateway($ route -n), e observe se o IP do mesmo é devolvido
+- VM do GW (10.9.14.113):
 
-- Instale o servidor Samba($ sudo apt-get install samba)
+![]()
 
-- Verifique se o arquivo já está na sua máquina($ whereis samba) e depois olhe se ela está ativa($ sudo systemctl status smbd)
-smbd.service - Samba SMB Daemon
-     Loaded: loaded (/lib/systemd/system/smbd.service; enabled; vendor preset: enabled)
-     Active: *active* (running) since Tue 2022-02-22 19:59:02 
+- VM do SAMBA (10.9.14.114):
 
-- Verifique o funcionamento das portas($ netstat -an | grep LISTEN)
+![]()
 
-- Realize o backup por meio do comando $ sudo cp /etc/samba/smb.conf{, .backup}
+- VM do NS1 (10.9.14.101):
 
-- 
+![]()
 
-### 3.3. Configuração da rede interna LAN nas VMs;
+- VM do NS2 (10.9.14.225):
 
-### 3.4. Configuração do DNS Master (ns1) e DNS Slave (ns2): 
+![]()
+
+- VM do WWW (10.9.14.215):
+
+![]()
+
+- VM do BD (10.9.14.216):
+
+![]()
+
+## 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM:
+
+Para cada VM criamos 5 usuários que se referem a cada integrante do grupo, vamos mostrar apenas o exemplo da VM do SAMBA (10.9.14.114), mas se quiser observar em cada VM [clique aqui]()!
+
+Para criar um usuário usamos o comando ```sudo adduser nomeUsuario```
+
+No nosso caso foi 5 usuários (Isabel, Jeycy, Clara, Dudha, Lavynia). Observe na imagem a seguir que esses usuários foram realmente criados, para isso utilize o comando ```getent passwd```
+
+![]()
+
+
+# 3. Implementação dos Serviços de Rede (cada serviço uma sessão)
+
+## 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2): 
 
 *Nesse roteiro o DNS Master foi configurado na VM (ns1 - 10.9.14.101) e o DNS Slave foi configurado na VM (ns2 - 10.9.14.113)*
 
-### 3.5. Implementação do servidor Web LAMP:
+## 3.2. Instalação do SAMBA: 
 
-## 4. Considerações Finais:
+*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.225)* 
+
+## 3.3. Implementação do servidor Web LAMP:
+
+## 3.4. Instalação do Gateway Server NAT:
+
+*Nesse roteiro o servidor Gateway como NAT foi configurado na VM (10.9.14.113)*
+
+## 3.5. Configuração da rede interna LAN nas VMs:
+
+
+# 4. Considerações Finais:
     Esse repositório será atualizado de acordo com o andamento do projeto. 
+    
+# 5. Referências:
