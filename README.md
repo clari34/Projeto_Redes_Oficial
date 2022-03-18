@@ -58,8 +58,8 @@
 | Nome da VM   | WAN    | IP          | LAN    | IP            |
 |   ---        | :---:  | :---:       | :---:  | :---:         |
 | IP do GW:    | ens160 | 10.9.14.113 | ens192 | 192.168.14.17 |
-| IP do SAMBA: | ens160 | 10.9.14.114 | ens192 | 192.168.14.18 |
-| IP do NS1:   | ens160 | 10.9.14.101 | ens192 | 192.168.14.19 |
+| IP do SAMBA: | ens160 | 10.9.14.101 | ens192 | 192.168.14.18 |
+| IP do NS1:   | ens160 | 10.9.14.114 | ens192 | 192.168.14.19 |
 | IP do NS2:   | ens160 | 10.9.14.225 | ens192 | 192.168.14.20 |
 | IP do WEB:   | ens160 | 10.9.14.215 | ens192 | 192.168.14.21 |
 | IP do BD:    | ens160 | 10.9.14.216 | ens192 | 192.168.14.22 |
@@ -69,8 +69,8 @@
 | **VM**    | **DOMÍNIO(ZONA)**                | **grupo3.turma914.ifalara.local** |
 |:--------- |----------------------------------|-----------------------------------|
 | Aluno13   | FQDN DO GW:                      | gw.grupo3.turma914.ifalara.local  |
-| Aluno14   | FQDN DO SAMBA:                   | smb.grupo3.turma914.ifalara.local |
-| Aluno01   | FQDN DO NS1:                     | ns1.grupo3.turma914.ifalara.local |
+| Aluno01   | FQDN DO SAMBA:                   | smb.grupo3.turma914.ifalara.local |
+| Aluno14   | FQDN DO NS1:                     | ns1.grupo3.turma914.ifalara.local |
 | Aluno25   | FQDN DO NS2:                     | ns2.grupo3.turma914.ifalara.local |
 | Grupo3vm1 | FQDN DO WEB:                     | www.grupo3.turma914.ifalara.local |
 | Grupo3vm2 | FQDN DO BD:                      | bd.grupo3.turma914.ifalara.local  |
@@ -87,42 +87,42 @@ Depois reinicie a máquina e verfique a mudança de nome com o comando ```hostna
 $ sudo hostnamectl set-hostname gw.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host1.jpg)
+![]()
 
-- VM 10.9.14.114 (samba - smb): 
+- VM 10.9.14.101 (samba - smb): 
 ```
 $ sudo hostnamectl set-hostname smb.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host2.jpg)
+![]()
 
-- VM 10.9.14.101 (nameServer1 - ns1):
+- VM 10.9.14.114 (nameServer1 - ns1):
 ```
 sudo hostnamectl set-hostname ns1.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host3.jpg)
+![]()
 
 - VM 10.9.14.225 (nameServer2 - ns2):
 ```
 $ sudo hostnamectl set-hostname ns2.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host4.jpg)
+![]()
 
 - VM 10.9.14.215 (web - www):
 ```
 $ sudo hostnamectl set-hostname www.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host5.jpg)
+![]()
 
 - VM 10.9.14.216 (banco - bd):
 ```
 $ sudo hostnamectl set-hostname bd.grupo3.turma914.ifalara.local
 ```
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hostnamectl/host6.jpg)
+![]()
 
 
 ## 2.3. A configuração de hardware utilizada em cada VM:
@@ -131,48 +131,68 @@ Essas configurações de hardware paracem logo no início, quando entramos na VM
 
 - VM do GW (10.9.14.113):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img1.jpg)
+![]()
 
-- VM do SAMBA (10.9.14.114):
+- VM do SAMBA (10.9.14.101):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img2.jpg)
+![]()
 
-- VM do NS1 (10.9.14.101):
+- VM do NS1 (10.9.14.114):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img3.jpg)
+![]()
 
 - VM do NS2 (10.9.14.225):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img4.jpg)
+![]()
 
 - VM do WWW (10.9.14.215):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img5.jpg)
+![]()
 
 - VM do BD (10.9.14.216):
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/hardware/img6.jpg)
+![]()
 
 ## 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM:
 
-Para cada VM criamos 5 usuários que se referem a cada integrante do grupo, vamos mostrar apenas o exemplo da VM do SAMBA (10.9.14.114), mas se quiser observar em cada VM [clique aqui](https://github.com/clari34/Projeto_Redes_Oficial/tree/main/defini%C3%A7%C3%B5es%20iniciais/criar_users)!
+Para cada VM criamos 5 usuários que se referem a cada integrante do grupo, vamos mostrar apenas o exemplo da VM do SAMBA (10.9.14.114), mas se quiser observar em cada VM [clique aqui]()!
 
 Para criar um usuário usamos o comando ```sudo adduser nomeUsuario```
 
 No nosso caso foi 5 usuários (Isabel, Jeycy, Clara, Dudha, Lavynia). Observe na imagem a seguir que esses usuários foram realmente criados, para isso utilize o comando ```getent passwd``` Esse comando mostrará todos os *users* da máquina.
 
-![](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/defini%C3%A7%C3%B5es%20iniciais/criar_users/user2.jpg)
+![]()
 
 
 # 3. Implementação dos Serviços de Rede (cada serviço uma sessão)
 
 ## 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2): 
 
-*Nesse roteiro o DNS Master foi configurado na VM (ns1 - 10.9.14.101) e o DNS Slave foi configurado na VM (ns2 - 10.9.14.113)*
+*Nesse roteiro o DNS Master foi configurado na VM (ns1 - 10.9.14.114) e o DNS Slave foi configurado na VM (ns2 - 10.9.14.225)*
+
+### DNS Master:
+
+Vamos instalar configurar e testar o DNS na nossa VM Master, a ***ns1***, de IP 10.9.14.114.
+
+- Primeiro devemos atualizar a nossa nossa máquina com o comando ```sudo apt update```, para que o nosso servidor DNS seja instalado em um máquina atualizada :)
+
+- Agora vamos instalar o BIND9 (que é o software de servidor de nomes), use o comando a seguir para instalá-lo: 
+```
+sudo apt-get install bind9 dnsutils bind9-doc
+```
+
+- Verifique o funcionamento do serviço com o comando:
+```
+sudo systemctl status bind9
+```
+
+![]()
+
+
 
 ## 3.2. Instalação do SAMBA: 
 
-*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.225)* 
+*Nesse roteiro o servidor samba foi configurado na VM (10.9.14.101)* 
 
 ## 3.3. Implementação do servidor Web LAMP:
 
