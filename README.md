@@ -1148,8 +1148,6 @@ netstat -an | grep LISTEN
 
 Pronto, agora as portas 3306 e 33060 estão funcionando para todas as interfaces!
 
----
-
 Configurarmos o funcionamento das portas do nosso servidor de banco de dados, e como o nome já diz, é um banco e precisa de muita segurança, por isso iremos mexer em algumas configurações de segurança do mysql.
 
 Use o comando a seguir
@@ -1168,6 +1166,7 @@ Para entrar basta usar o comando ```sudo mysql```, aparecerá uma mensagem de bo
 
 ![img9](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img9.jpg)
 
+---
 
 ### 3.3.2. APACHE
 
@@ -1191,13 +1190,11 @@ hostname -I
 systemd-resolve --status ens160
 ```
 
-![img1]()
+![img1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img1.jpg)
 
 Fizemos também um teste para verificarmos o funcionamento do DNS:
 
-![img2]()
-
----
+![img2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img2.jpg)
 
 Antes de começarmos de fato a instalação iremos atualizar a nossa máquina com o comando
 
@@ -1213,9 +1210,7 @@ lsb_release -a
 
 Devemos fazer isso para fazermos a instalação adequada para nossa máquina
 
-![img3]()
-
----
+![img3](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img3.jpg)
 
 Agora vamos instalar o servidor WEB, o Apache!
 
@@ -1231,7 +1226,7 @@ Vejamos o status do APACHE, se ele está funcionando, para isso use o comando:
 sudo systemctl status apache2
 ```
 
-![img4]()
+![img4](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img4.jpg)
 
 Depois disso você já pode acessar sua máquina em um browser e ver a página html padrão, isso acontece porque instalamos o APACHE e ele já está funcionando :)
 
@@ -1241,7 +1236,7 @@ No nosso caso colocamos *http://10.9.14.215*
 
 Observe a seguir a página que aparece na tela após a instalação do APACHE:
 
-![img5]()
+![img5](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img5.jpg)
 
 A página html do APACHE está na pasta **cd /var/www/html**
 
@@ -1251,7 +1246,7 @@ Entre nesta pasta, para isso use o comando
 cd /var/www/html
 ```
 
-![img6]()
+![img6](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img6.jpg)
 
 Observe que os arquivos pertencem ao usuário *root*, então vamos definir o usuário do APACHE *www-data* como o proprietário da raiz do documento. Use o comando a seguir para isso:
 
@@ -1261,7 +1256,7 @@ sudo chown www-data:www-data /var/www/html -R
 
 Depois veja a mudança, use ```ls -la /var/www``` para isso
 
-![img7]()
+![img7](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img7.jpg)
 
 ---
 
@@ -1281,7 +1276,7 @@ Para começar a instalação use o comando abaixo (copie)
 sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-common php7.4-json php7.4-opcache php7.4-readline
 ```
 
-Depois disso carregue o PHP no Apache (que instalamos na sessão anterior), com o comando
+Depois disso carregue o PHP no Apache (que instalamos na sessão anterior - a saber, 3.3.2). Use o comando
 
 ```
 sudo a2enmod php7.4
@@ -1293,7 +1288,7 @@ Depois de executado o comando reinice o apache:
 sudo systemctl restart apache2
 ```
 
-![img8]()
+![img8](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img8.jpg)
 
 O servidor WEB PHP já deve funcionar!!!
 
@@ -1307,7 +1302,7 @@ sudo touch /var/www/html/grupo3.php
 
 Use o comando ```ls -la``` para verificar se o arquivo realmente foi criado
 
-![img9]()
+![img9](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img9.jpg)
 
 Entre no arquivo, use o comando ``sudo nano grupo3.php`` e adicione a linha abaixo
 
@@ -1327,7 +1322,7 @@ http://10.9.14.215/grupo3.php
 
 Uma página sobre o PHP 7.4 aparecerá na sua tela, como abaixo 
 
-![img10]()
+![img10](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img10.jpg)
 
 ---
 
@@ -1397,19 +1392,19 @@ Inserimos os dados, agora vamos testar o comando **SELECT * FROM**
 SELECT * FROM grupo;
 ```
 
-![img18]()
+![img18](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img18.jpg)
 
 ```
 SELECT * FROM aluno;
 ```
 
-![img19]()
+![img19](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img19.jpg)
 
 ```
 SELECT * FROM host;
 ```
 
-![img20]()
+![img20](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img20.jpg)
 
 Pronto!
 
@@ -1423,26 +1418,26 @@ Depois entre na máquina **www**
 
 ---
 
-Agora estamos na máquina **www** **de IP 10.9.14.215** e de nome **www.grupo3.turma914.ifalara.local**, isso conforme as tabelas de início do documento, sempre (por isso é tão importante fazer as tabelas, para que você não se perca)!!!
+Agora estamos na máquina **www de IP 10.9.14.215** e de nome **www.grupo3.turma914.ifalara.local**, isso conforme as tabelas de início do documento, sempre (por isso é tão importante fazer as tabelas, para que você não se perca)!!!
 
 
-Para baixarmos o script de teste temos que primeiro baixar o *unzip* para descompactar a pasta! Use o comando abaixo para baixá-lo
+Para baixarmos o script de teste temos que primeiro baixar o *unzip* para descompactar a pasta! Use o comando a seguir para baixá-lo
 
 ```
 sudo apt install zip unzip -y
 ```
 
-Agora iremos desempacotar o script de teste db criado pelo professor, para isso utilizamos o comando a seguir:
+Agora iremos desempacotar o [script de teste db criado pelo professor](https://github.com/alaelson/labredes2021/blob/main/network/lamp/testedb/script_teste_db.zip), para isso utilizamos o comando a seguir:
 
-Mas primeiro devemos baixar o script, para isso utilizamos a aplicação [WinSCP](https://winscp.net/download/WinSCP-5.19.6-Setup.exe) para mover a pasta zip para a nossa VM, na pasta /home/administrador dela
+Mas primeiro devemos colocar o script na nossa máquina virtual, para isso utilizamos a aplicação [WinSCP](https://winscp.net/download/WinSCP-5.19.6-Setup.exe) para mover a pasta zip para a nossa VM, na pasta /home/administrador dela
 
 A seguir uma imagem mostrando a pasta transeferida do home local do computador para o home remoto da VM:
 
-![img21]()
+![img21](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img21.jpg)
 
 Depois disso verifique no terminal se realmente a pasta foi criada
 
-![img22]()
+![img22](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img22.jpg)
 
 Agora descompacte a pasta usando o comando a seguir
 
@@ -1452,9 +1447,9 @@ unzip script_teste_db.zip
 
 Agora vamos até a pasta e verificamos os arquivos que lá existem, o *del.php, insert.php, select.php, update.php*. Vamos modificá-los com as informações da VM do nosso grupo.
 
-![img23]()
+![img23](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img23.jpg)
 
-Iremos modificar os arquivos, após a mudança de cada um por vez, para sair e salvar basta apertar *ctrl + x, y e enter*
+Iremos modificar cada um dos arquivos, para sair e salvar basta apertar *ctrl + x, y e enter*
 
 Para modificar o arquivo *del.php* use o comando abaixo
 
@@ -1462,7 +1457,7 @@ Para modificar o arquivo *del.php* use o comando abaixo
 sudo nano del.php
 ```
 
-![img24]()
+![img24](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img24.jpg)
 
 Para modificar o arquivo *insert.php* use o comando abaixo
 
@@ -1470,7 +1465,7 @@ Para modificar o arquivo *insert.php* use o comando abaixo
 sudo nano insert.php
 ```
 
-![img25]()
+![img25](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img25.jpg)
 
 Para modificar o arquivo *select.php* use o comando abaixo
 
@@ -1478,7 +1473,7 @@ Para modificar o arquivo *select.php* use o comando abaixo
 sudo nano select.php
 ```
 
-![img26]()
+![img26](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img26.jpg)
 
 Para modificar o arquivo *update.php* use o comando abaixo
 
@@ -1486,7 +1481,7 @@ Para modificar o arquivo *update.php* use o comando abaixo
 sudo nano update.php
 ```
 
-![img27]()
+![img27](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img27.jpg)
 
 Pronto!
 
@@ -1494,11 +1489,11 @@ Configuramos os arquivos do demo do bd para utilizar com as nossas informações
 
 ---
 
-Agora iremos baixar o site demo.
+Agora iremos baixar o [site demo](https://github.com/alaelson/labredes2021/blob/551391a34728b53de28b2251ae206b17bedc277d/network/lamp/siteDemo/www.grupox.turma914.ifalara.local.zip).
 
-Faremos da mesma forma que fizemos para baixar o demo db, iremos usar o demo do professor, baixamos o arquivo zip em nosso computador depois usando o *WinSCP* copiamos o arquivo para a nossa VM. Depois iremos verificar se a pasta foi mesmo copiada com o comando ``ls -la``
+Faremos da mesma forma que fizemos para baixar o demo db, iremos usar o demo do professor, baixamos o arquivo zip em nosso computador, depois usando o *WinSCP* copiamos o arquivo para a nossa VM. Depois iremos verificar se a pasta foi mesmo copiada com o comando ``ls -la``
 
-![img28]()
+![img28](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img28.jpg)
 
 Agora iremos descompactar a pasta com o comando abaixo e depois iremos modificar os arquivos para usar as informações da nossa máquina
 
@@ -1509,7 +1504,7 @@ Para decompactar a pasta:
 unzip www.grupo3.turma914.ifalara.local.zip
 ```
 
-Para modificar os arquivos entre na pasta *www.grupo3.turma914.ifalara.local* e execute o comando ``ls -la``, veja os nomes dos arquivos .php e os modifique de acordo com as infromações do seu banco, use o comando a seguir e vá apenas modificando o nome do arquivo
+Para modificar os arquivos entre na pasta *www.grupox.turma914.ifalara.local* e execute o comando ``ls -la``, veja os nomes dos arquivos .php e os modifique de acordo com as infromações do seu banco, use o comando a seguir e vá apenas modificando o nome do arquivo no comando:
 
 ```
 sudo nano nomeArquivo.php
@@ -1521,7 +1516,7 @@ Feitas as configurações anteriores agora iremos começar a montar o nosso *sit
 
 Para isso devemos criar a pasta que armazenará o nosso site 
 
-> IMPORTANTE: essa pasta deve ter o mesmo nome que ESPECIFICAREMOS no arquivo de configuração, especificamente na parte de <VirtualHosts>
+> IMPORTANTE: essa pasta deve ter o mesmo nome que COLOCAREMOS no arquivo de configuração, especificamente na parte de <VirtualHosts>
 
 Em nosso caso o nome da pasta deverá se chamar ***www.grupo3.turma914.ifalara.local***
 
@@ -1533,7 +1528,7 @@ Execute o comando a seguir para mover a pasta
 sudo mv www.grupox.turma914.ifalara.local/ /var/www
 ``` 
 
-Depois renomei o nome da pasta para aquele que foi configurado no <VirtualHosts>
+Depois renomei o nome da pasta para aquele que irá ser configurado no <VirtualHosts>, em nosso caso será *www.grupo3.turma914.ifalara.local*
 
 Execute o comando para renomear
 
@@ -1547,7 +1542,7 @@ Pasta criada! Agora vamos mudar as permissões do usuário/dono da pasta. Use o 
 sudo chown -R www-data:www-data www.grupo3.turma914.ifalara.local
 ```
 
-![img17]()
+![img17](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img17.jpg)
  
 
 Depois de feita essas cofigurações recarregue o APACHE com o seguinte comando
@@ -1560,7 +1555,7 @@ Agora com MySQL, Apache e PHP instalados e devidamente configurados, nosso banco
 
 Para que o nosso servidor Apache reconheça o FQDN ("nome completo") da máquina como URL, devemos verificar se o DNS Server está funcionando bem, para isso vamos dar um ***ping*** para o endereço **www.grupo3.turma914.ifalara.local**, se funcionar significa que o DNS está OK...
 
-![img11]()
+![img11](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img11.jpg)
 
 Como podemos perceber o DNS está OK! Então vamos continuar...
 
@@ -1574,7 +1569,7 @@ cd /etc/apache2/sites-available
 ls -la
 ```
 
-![img12]()
+![img12](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img12.jpg)
 
 Iremos realizar um cópia do arquivo em destaque na imagem anterior para um outro arquivo que terá o nosso nome de domínio, nesse caso *www.grupo3.turma914.ifalara.local*
 
@@ -1584,7 +1579,7 @@ Use o comando a seguir para realizar a cópia de um arquivo para o outro
 cp 000-default.conf www.grupo3.turma914.ifalara.local.conf
 ```
 
-![img13]()
+![img13](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img13.jpg)
 
 Edite o arquivo ***www.grupo3.turma914.ifalara.local.conf*** e adicione as linhas abaixo na parte de **<VirtualHost>**
 
@@ -1601,11 +1596,11 @@ E retire as linhas de erro de log
 ```
 Imagem do antes da configuração do arquivo:
 
-![img14]()
+![img14](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img14.jpg)
 
 Imagem do depois da configuração do arquivo:
 
-![img15]()
+![img15](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img15.jpg)
 ```
 
 Depois de feita a cofiguração recarregue o APACHE com o seguinte comando
@@ -1650,7 +1645,7 @@ Uma imagem do nosso site:
 
 ![img30]()
 
-[Vídeo do teste no site!]()
+[Vídeo do teste no site!](https://drive.google.com/file/d/16pJa7HEBXy6fJjh55D661fd9UtiAnYVF/view?usp=drivesdk)
 
 ## 3.4. Instalação do Gateway Server NAT:
 
