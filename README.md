@@ -1594,7 +1594,6 @@ Edite o arquivo ***www.grupo3.turma914.ifalara.local.conf*** e adicione as linha
 
 E retire as linhas de erro de log
 
-```
 Imagem do antes da configuração do arquivo:
 
 ![img14](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img14.jpg)
@@ -1602,7 +1601,6 @@ Imagem do antes da configuração do arquivo:
 Imagem do depois da configuração do arquivo:
 
 ![img15](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/img15.jpg)
-```
 
 Depois de feita a cofiguração recarregue o APACHE com o seguinte comando
 
