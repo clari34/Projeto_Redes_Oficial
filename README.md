@@ -1770,12 +1770,12 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 
 ```
 #Recebe pacotes na porta 445 da interface externa do gw e encaminha para o servidor interno na porta 445
-iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 445 -j DNAT –-to 10.9.14.101:445
-iptables -A FORWARD -p tcp -d 10.9.14.101 –-dport 445 -j ACCEPT
+iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 445 -j DNAT –-to 192.168.14.18:445
+iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 
 #Recebe pacotes na porta 139 da interface externa do gw e encaminha para o servidor interno na porta 139
-iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 10.9.14.101:139
-iptables -A FORWARD -p tcp -d 10.9.14.101 –-dport 445 -j ACCEPT 
+iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 192.168.14.18:139
+iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT 
 ```
 
 Esse comando cria uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
@@ -1805,9 +1805,17 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 ```
 #Encaminhamento para servidor web na porta 80
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
-iptables -A FORWARD -p udp -d 10.0.0.10 –-dport 80 -j ACCEPT
+iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
 ---
+     
+- **BD**
+     
+ Na máquina do banco de dados basta modificarmos o arquivo yaml das interfaces, para que a interfaces passem pelo gateway.
+     
+ Configuração da interface:
+
+![img8]()
 
 # 4. Considerações Finais:
 
