@@ -24,7 +24,7 @@
 - [ ] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
      - [X] 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2);
      - [X] 3.2. Instalação do SAMBA;
-     - [ ] 3.3. Implementação do servidor Web LAMP;
+     - [X] 3.3. Implementação do servidor Web LAMP;
      - [ ] 3.4. Instalação do Gateway Server NAT;
      - [ ] 3.5. Configuração da rede interna LAN nas VMs;
 - [ ] 4. Considerações Finais; 
@@ -1042,6 +1042,615 @@ A terceira pasta foi criada!!!!
 SAMBA testado com sucesso!!!!
 
 ## 3.3. Implementação do servidor Web LAMP:
+
+***Para instalar o serviço WEB LAMP (Linux + Apache + PHP + MySQL) seguiremos os passos a seguir.***
+
+### 3.3.1. MySQL 8
+
+O MySQL Server é um sistema de gerenciamento de banco de dados, para instalá-lo e configurá-lo siga os passos:
+
+De acordo com nossas tabelas 1 e 2, o **IP da VM bd é 10.9.14.216** e o nome de domínio dela é **bd.grupo3.turma914.ifalara.local**
+
+Antes de começar mostraremos o nome da máquina e seu IP e mostraremos que a máquina está usando o DNS Server que implementamos.
+
+Para verificar o nome:
+
+```
+hostname
+```
+
+Para verificar os IPs da ens160 e ens192:
+
+```
+hostname -I
+```
+
+```
+systemd-resolve --status ens160
+```
+
+![img1]()
+
+Fizemos também um teste para verificarmos o funcionamento do DNS:
+
+![img2]()
+
+
+Antes de começarmos de fato a instalação iremos atualizar a nossa máquina com o comando
+
+```
+sudo apt update
+```
+
+---
+
+Para instalar o servidor MySQLS use o comando abaixo na linha de comando do terminal:
+
+```
+sudo apt install mysql-server
+```
+
+Quando finalizar a instalação veja o funcionamento com o seguinte comando
+
+```
+systemctl status mysql
+```
+
+![img3]
+
+Sabemos que o MySQL tem como porta padrão a 3306, para verficarmos o funcionamento desta porta usamos o comando a seguir, logo depois você verá uma saída semelhante a da imagem:
+
+```
+netstat -an | grep LISTEN
+```
+
+![img4]()
+
+Perceba na imagem anterior que nas portas 3306 e 33060 o MySQL está se conectando apenas com a interface 127.0.0.1, sendo assim precisamos liberar acesso para as outras interfaces. Para isso iremos liberar para as outras interfaces utilizando o IP 0.0.0.0 (conhecido como IP coringa). Para fazer isso devemos entrar no arquivo de configuração do MySQL, use o comando abaixo para entrar no arquivo:
+
+```
+cd /etc/mysql/mysql.conf.d
+``` 
+
+Após entrar na pasta, execute o comando ```ls -la```, você verá que existem um arquivo *mysqld.conf*, iremos editá-lo para liberar o acesso das portas. Use o comando abaixo para entrar no arquivo
+
+```
+sudo nano mysqld.cnf
+```
+
+Verá que no arquivo tem muitas linhas, mas calma! As linhas que devemos editar estão logo no começo, são elas as linhas **bind-address** e **mysqlx-bind-address**
+
+- Imagem de antes da configuração:
+
+![img5]()
+
+- Imagem de depois da configuração:
+
+![img6]()
+
+Para salvar as configurações aperte *ctrl + x*, *y* e depois aperte enter. 
+
+Após salvar as configurações devemos reiniciar o serviço, para isso use o comando a seguir:
+
+```
+sudo restart mysql
+```
+
+Uma boa prática é olhar o status também :)
+
+Feito isso, agora liberamos as outras interfaces, para verificar use o comando já conhecido
+
+```
+netstat -an | grep LISTEN
+```
+
+![img7]()
+
+Pronto, agora as portas 3306 e 33060 estão funcionando para todas as interfaces!
+
+---
+
+Configurarmos o funcionamento das portas do nosso servidor de banco de dados, e como o nome já diz, é um banco e precisa de muita segurança, por isso iremos mexer em algumas configurações de segurança do mysql.
+
+Use o comando a seguir
+
+```
+sudo mysql_secure_installation
+```
+
+Algumas perguntas serão feitas, marcamos com um círculo verde as respostas. No cículo vermelho está a parte de criação da sua senha mysql (anote). **No nosso caso a senha foi ```s3nh4@ifal```**
+
+![img8]()
+
+Pronto. você já pode usar o seu servidor de banco de dados :)
+
+Para entrar basta usar o comando ```sudo mysql```, aparecerá uma mensagem de boas vindas. Para sair digite *exit*
+
+![img9]()
+
+
+### 3.3.2. APACHE
+
+De acordo com nossas tabelas 1 e 2, o **IP da VM Web é 10.9.14.215** e o nome de domínio dela é **www.grupo3.turma914.ifalara.local**
+
+Antes de começar mostraremos o nome da máquina e seu IP e mostraremos que a máquina está usando o DNS Server que implementamos.
+
+Para verificar o nome:
+
+```
+hostname
+```
+
+Para verificar os IPs da ens160 e ens192:
+
+```
+hostname -I
+```
+
+```
+systemd-resolve --status ens160
+```
+
+![img1]()
+
+Fizemos também um teste para verificarmos o funcionamento do DNS:
+
+![img2]()
+
+---
+
+Antes de começarmos de fato a instalação iremos atualizar a nossa máquina com o comando
+
+```
+sudo apt update
+```
+
+Verifique qual a versão do servidor da sua máquina. A nossa é *Ubuntu 20.04*, use o comando abaixo para verficar
+
+```
+lsb_release -a
+```
+
+Devemos fazer isso para fazermos a instalação adequada para nossa máquina
+
+![img3]()
+
+---
+
+Agora vamos instalar o servidor WEB, o Apache!
+
+Para a instalação do APACHE junto com os pacotes úteis a ele, utilizamos o comando abaixo:
+
+```
+sudo apt install apache2 apache2-utils -y
+```
+
+Vejamos o status do APACHE, se ele está funcionando, para isso use o comando:
+
+```
+sudo systemctl status apache2
+```
+
+![img4]()
+
+Depois disso você já pode acessar sua máquina em um browser e ver a página html padrão, isso acontece porque instalamos o APACHE e ele já está funcionando :)
+
+Coloque na barra de pesquisa: **http://ipdasuamaquina**
+
+No nosso caso colocamos *http://10.9.14.215*
+
+Observe a seguir a página que aparece na tela após a instalação do APACHE:
+
+![img5]()
+
+A página html do APACHE está na pasta **cd /var/www/html**
+
+Entre nesta pasta, para isso use o comando
+
+```
+cd /var/www/html
+```
+
+![img6]()
+
+Observe que os arquivos pertencem ao usuário *root*, então vamos definir o usuário do APACHE *www-data* como o proprietário da raiz do documento. Use o comando a seguir para isso:
+
+```
+sudo chown www-data:www-data /var/www/html -R
+``` 
+
+Depois veja a mudança, use ```ls -la /var/www``` para isso
+
+![img7]()
+
+---
+
+### 3.3.3 PHP 7.4
+
+Agora ainda na máquina Web de **IP é 10.9.14.215** e nome de domínio **www.grupo3.turma914.ifalara.local**, vamos instalar a linguagem PHP, versão 7.4
+
+Antes de instalar iremos realizar uma atualização na nossa máquina, para isso use o bom e já conhecido comando
+
+```
+sudo apt update
+```
+
+Para começar a instalação use o comando abaixo (copie)
+
+```
+sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-common php7.4-json php7.4-opcache php7.4-readline
+```
+
+Depois disso carregue o PHP no Apache (que instalamos na sessão anterior), com o comando
+
+```
+sudo a2enmod php7.4
+```
+
+Depois de executado o comando reinice o apache:
+
+```
+sudo systemctl restart apache2
+```
+
+![img8]()
+
+O servidor WEB PHP já deve funcionar!!!
+
+Para testarmos iremos criar um arquivo **grupo3.php** na pasta raiz **cd /var/www/html**
+
+Para criar este arquivo use o comando a seguir
+
+```
+sudo touch /var/www/html/grupo3.php
+```
+
+Use o comando ```ls -la``` para verificar se o arquivo realmente foi criado
+
+![img9]()
+
+Entre no arquivo, use o comando ``sudo nano grupo3.php`` e adicione a linha abaixo
+
+```
+<?php
+     phpinfo();
+?>
+```
+
+Agora para testarmos abra um browser e digite na área de pesquisa assim **http://ipdasuamaquina/grupo3.php**
+
+No nosso caso utilizamos como a seguir
+
+```
+http://10.9.14.215/grupo3.php
+```
+
+Uma página sobre o PHP 7.4 aparecerá na sua tela, como abaixo 
+
+![img10]()
+
+---
+
+### 3.3.4. SITE
+
+Agora iremos criar um database demo.
+
+Para isso devemos nos conectar a nossa máquina *bd*, de *IP 10.9.14,216* e nome de domínio *bd.grupo3.turma914.ifalara.local*
+
+Para criarmos o banco de dados devemos entrar no MySQL, use o comando abaixo para entrar
+
+```
+sudo mysql
+```
+
+Vamos criara 3 tabelas, aluno, grupo e host. Usaremos  exemplo a seguir para criar nosso banco de dados:
+
+```
+-- Cria o database do projeto final.
+CREATE DATABASE projetofinal_sred;
+
+-- Acessa a database do projeto final
+USE projetofinal_sred;
+
+-- Cria as tabelas aluno, grupo e host
+CREATE TABLE aluno (UID int(10) unsigned NOT NULL AUTO_INCREMENT, Nome varchar (255), Email varchar (255), GID int,PRIMARY KEY (`UID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE grupo (GID int(10) unsigned NOT NULL, Nome varchar (255), Dominio varchar (255), PRIMARY KEY (`GID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE host (HID int(10) unsigned NOT NULL AUTO_INCREMENT, VmName varchar (255), FQDName varchar (255), GID int, PRIMARY KEY (`HID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- cria o usuario um com acesso pelo localhost: user: 'pfadmin' e senha '4dm1n@BD'
+CREATE USER 'pfadmin'@'localhost' IDENTIFIED BY '4dm1n@BD';
+
+-- concede privilegios de acesso a todas as tabelas do mysql ao usuario 'pfadmin'
+GRANT ALL PRIVILEGES ON *.* TO 'pfadmin'@'localhost' WITH GRANT OPTION;
+
+-- cria o usuario um com acesso pelo servidor web: user: 'pfadmin' e senha '4dm1n@BD'. Então coloque o IP do servidor web
+CREATE USER 'pfadmin'@'10.9.14.215' IDENTIFIED BY '4dm1n@BD';
+
+-- concede privilegios de acesso a todas as tabelas do mysql ao usuario 'pfadmin' logando remotamente pelo ip 10.9.14.215.
+-- Use o IP do servidor Web do seu grupo
+GRANT ALL PRIVILEGES ON *.* TO 'pfadmin'@'10.9.14.215' WITH GRANT OPTION;
+```
+
+Agora iremos fazer um teste de inserção de dados em cada tabela, para que possamos testar o comando **SELECT * FROM**
+
+> Iremos inserir 3 dos partipantes do grupo e deixar dois para o teste o site!!!
+
+Para inserir dados na tabela aluno coloque como a seguir
+
+```
+INSERT INTO grupo VALUES (3, 'Grupo3', 'grupo3.turma914.ifalara.local');
+
+INSERT INTO aluno VALUES (101, 'Ana Clara da Silva Nunes', 'acsn4@alunoifal.edu.br', 3);
+INSERT INTO aluno VALUES (225, 'Marya Eduardha Freitas Pereira', 'mefp@alunoifal.edu.br', 3);
+INSERT INTO aluno VALUES (216, 'Lavynia Farias Santos', 'lfs8@alunoifal.edu.br', 3);
+
+INSERT INTO host VALUES (101, 'Samba (smb)', 'smb.grupo3.turma914.ifalara.local', 3);
+INSERT INTO host VALUES (225, 'NameServer2 (ns2)', 'ns2.grupo3.turma914.ifalara.local', 3);
+INSERT INTO host VALUES (216, 'BD (bd)', 'bd.grupo3.turma914.ifalara.local', 3);
+```
+
+Inserimos os dados, agora vamos testar o comando **SELECT * FROM**
+
+```
+SELECT * FROM grupo;
+```
+
+![img18]()
+
+```
+SELECT * FROM aluno;
+```
+
+![img19]()
+
+```
+SELECT * FROM host;
+```
+
+![img20]()
+
+Pronto!
+
+Nosso banco está funcionando :)
+
+Agora vamos montar nosso site :) :) :)
+
+Para começarmos saia do MySQL, digite ```exit```
+
+Depois entre na máquina **www**
+
+---
+
+Agora estamos na máquina **www** **de IP 10.9.14.215** e de nome **www.grupo3.turma914.ifalara.local**, isso conforme as tabelas de início do documento, sempre (por isso é tão importante fazer as tabelas, para que você não se perca)!!!
+
+
+Para baixarmos o script de teste temos que primeiro baixar o *unzip* para descompactar a pasta! Use o comando abaixo para baixá-lo
+
+```
+sudo apt install zip unzip -y
+```
+
+Agora iremos desempacotar o script de teste db criado pelo professor, para isso utilizamos o comando a seguir:
+
+Mas primeiro devemos baixar o script, para isso utilizamos a aplicação [WinSCP](https://winscp.net/download/WinSCP-5.19.6-Setup.exe) para mover a pasta zip para a nossa VM, na pasta /home/administrador dela
+
+A seguir uma imagem mostrando a pasta transeferida do home local do computador para o home remoto da VM:
+
+![img21]()
+
+Depois disso verifique no terminal se realmente a pasta foi criada
+
+![img22]()
+
+Agora descompacte a pasta usando o comando a seguir
+
+```
+unzip script_teste_db.zip
+```
+
+Agora vamos até a pasta e verificamos os arquivos que lá existem, o *del.php, insert.php, select.php, update.php*. Vamos modificá-los com as informações da VM do nosso grupo.
+
+![img23]()
+
+Iremos modificar os arquivos, após a mudança de cada um por vez, para sair e salvar basta apertar *ctrl + x, y e enter*
+
+Para modificar o arquivo *del.php* use o comando abaixo
+
+```
+sudo nano del.php
+```
+
+![img24]()
+
+Para modificar o arquivo *insert.php* use o comando abaixo
+
+```
+sudo nano insert.php
+```
+
+![img25]()
+
+Para modificar o arquivo *select.php* use o comando abaixo
+
+```
+sudo nano select.php
+```
+
+![img26]()
+
+Para modificar o arquivo *update.php* use o comando abaixo
+
+```
+sudo nano update.php
+```
+
+![img27]()
+
+Pronto!
+
+Configuramos os arquivos do demo do bd para utilizar com as nossas informações de IP e domínio
+
+---
+
+Agora iremos baixar o site demo.
+
+Faremos da mesma forma que fizemos para baixar o demo db, iremos usar o demo do professor, baixamos o arquivo zip em nosso computador depois usando o *WinSCP* copiamos o arquivo para a nossa VM. Depois iremos verificar se a pasta foi mesmo copiada com o comando ``ls -la``
+
+![img28]()
+
+Agora iremos descompactar a pasta com o comando abaixo e depois iremos modificar os arquivos para usar as informações da nossa máquina
+
+
+Para decompactar a pasta:
+
+```
+unzip www.grupo3.turma914.ifalara.local.zip
+```
+
+Para modificar os arquivos entre na pasta *www.grupo3.turma914.ifalara.local* e execute o comando ``ls -la``, veja os nomes dos arquivos .php e os modifique de acordo com as infromações do seu banco, use o comando a seguir e vá apenas modificando o nome do arquivo
+
+```
+sudo nano nomeArquivo.php
+```
+
+---
+
+Feitas as configurações anteriores agora iremos começar a montar o nosso *site*!!!
+
+Para isso devemos criar a pasta que armazenará o nosso site 
+
+> IMPORTANTE: essa pasta deve ter o mesmo nome que ESPECIFICAREMOS no arquivo de configuração, especificamente na parte de <VirtualHosts>
+
+Em nosso caso o nome da pasta deverá se chamar ***www.grupo3.turma914.ifalara.local***
+
+Nós já temos a pasta do site que baixamos a pouco, devemos movê-la para a pasta */var/www* que é onde fica os arquivos html
+
+Execute o comando a seguir para mover a pasta 
+
+```
+sudo mv www.grupox.turma914.ifalara.local/ /var/www
+``` 
+
+Depois renomei o nome da pasta para aquele que foi configurado no <VirtualHosts>
+
+Execute o comando para renomear
+
+```
+mv www.grupox.turma914.ifalara.local/www.grupo3.turma914.ifalara.local
+```
+
+Pasta criada! Agora vamos mudar as permissões do usuário/dono da pasta. Use o seguinte comando para isso
+
+```
+sudo chown -R www-data:www-data www.grupo3.turma914.ifalara.local
+```
+
+![img17]()
+ 
+
+Depois de feita essas cofigurações recarregue o APACHE com o seguinte comando
+
+```
+sudo systemctl reload apache2
+```
+
+Agora com MySQL, Apache e PHP instalados e devidamente configurados, nosso banco demo e site demo instalados, poderemos usar nosso site, mas antes disso, devemos fazer outras configurações...
+
+Para que o nosso servidor Apache reconheça o FQDN ("nome completo") da máquina como URL, devemos verificar se o DNS Server está funcionando bem, para isso vamos dar um ***ping*** para o endereço **www.grupo3.turma914.ifalara.local**, se funcionar significa que o DNS está OK...
+
+![img11]()
+
+Como podemos perceber o DNS está OK! Então vamos continuar...
+
+Na máquina iremos executar os seguintes comandos 
+
+```
+cd /etc/apache2/sites-available
+```
+
+```
+ls -la
+```
+
+![img12]()
+
+Iremos realizar um cópia do arquivo em destaque na imagem anterior para um outro arquivo que terá o nosso nome de domínio, nesse caso *www.grupo3.turma914.ifalara.local*
+
+Use o comando a seguir para realizar a cópia de um arquivo para o outro
+
+```
+cp 000-default.conf www.grupo3.turma914.ifalara.local.conf
+```
+
+![img13]()
+
+Edite o arquivo ***www.grupo3.turma914.ifalara.local.conf*** e adicione as linhas abaixo na parte de **<VirtualHost>**
+
+```
+<VirtualHost *:80>
+     ServerAdmin webmaster@localhost                              # Pessoa que administra o site
+     DocumentRoot /var/www/www.grupo3.turma914.ifalara.local      # Diretório onde os arquivos do site ficarão
+     ServerName www.grupo3.turma914.ifalara.local                 # Nome do servidor, ou seja, a url raíz do site.
+<\VirtualHost>
+```
+
+E retire as linhas de erro de log
+
+```
+Imagem do antes da configuração do arquivo:
+
+![img14]()
+
+Imagem do depois da configuração do arquivo:
+
+![img15]()
+```
+
+Depois de feita a cofiguração recarregue o APACHE com o seguinte comando
+
+```
+sudo systemctl reload apache2
+```
+
+---
+
+Para o site funcionar desabilite o site padrão do apache:
+
+```
+sudo a2dissite 000-default.conf
+```
+
+Agora devemos habilitar no nosso site com o comando
+
+```
+sudo a2ensite www.grupo3.tuma914.ifalara.local.conf
+```
+
+Verifique a sintaxe com  comando 
+
+```
+sudo apache2ctl configtest
+```
+
+Agora reinicie o serviço
+
+```
+sudo systemctl restart apache2
+```
+
+PRONTO! 
+
+Pode usar o site :)
+
+OBS: você pode testar o site tanto pelo celular quanto pelo computador, basta ter a OpenVPN aberta e ligada, e um terminal ssh.
+
+Uma imagem do nosso site:
+
+![img30]()
+
+[Vídeo do teste no site!]()
 
 ## 3.4. Instalação do Gateway Server NAT:
 
