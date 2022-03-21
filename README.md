@@ -1774,6 +1774,11 @@ sudo netplan apply
 ```
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
+     
+Entre no arquivo com o comando
+```
+sudo nano /etc/rc.local
+```
 
 ```
 #Recebe pacotes na porta 445 da interface externa do gw e encaminha para o servidor interno na porta 445
@@ -1784,7 +1789,6 @@ iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 192.168.14.18:139
 iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT 
 ```
-![img6](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img7.jpg)
      
 Depois salve o arquivo e execute ```sudo /etc/rc.local```
      
@@ -1797,6 +1801,7 @@ Para isso colocamos ``smb cname gw``, mas no nosso caso repetimos o IP do gatewa
 Para entrar no arquivo de configuração do bind, execute o comando abaixo dentro da pasta ```cd /etc/bind/zones```:
      
 Para zona direta
+     
 ```
 sudo nano db.grupo3.turma914.ifalara.local     
 ```
@@ -1804,15 +1809,17 @@ sudo nano db.grupo3.turma914.ifalara.local
 ![img7](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img7.jpg)
      
 Para zona reversa
+     
 ```
 sudo nano db.10.9.rev     
 ```
+     
 ![img8](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img8.jpg)
 
 Lembre-se de reiniciar o bind9
 
 ```
-sudo systemctl bind9
+sudo systemctl restart bind9
 ```
 
 ---
@@ -1836,12 +1843,23 @@ sudo netplan apply
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
      
+Entre no arquivo com o comando
+     
+```
+sudo nano /etc/rc.local
+```
+     
 ```
 #Encaminhamento para servidor web na porta 80
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
-iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
-![img10](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img10.jpg)
+     
+Agora execute o arquivo com o comando abaixo
+
+```
+sudo /etc/rc.local
+```
      
 ---
      
