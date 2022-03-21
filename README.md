@@ -1736,14 +1736,10 @@ Vamos dar permissão para execução deste arquivo com o comando abaixo:
 sudo chmod 755 /etc/rc.local
 ```
 
-Vamos ver se o arquivo foi criado, para isso use o comando ``ls -a``
-
-![img5]()
-
 Agora execute o arquivo com o comando abaixo
 
 ```
-sudo ./etc/rc.local
+sudo /etc/rc.local
 ```
 
 Depois verifique se o firewal está funcionando (ativo)
@@ -1751,8 +1747,6 @@ Depois verifique se o firewal está funcionando (ativo)
 ```
 sudo ufw status
 ```
-
-![img6]()
 
 ---
 
@@ -1764,7 +1758,7 @@ Em cada máquina descrita acima, vamos mudar o arquivo de configuração das int
 
 Configuração da interface:
 
-![img7]()
+![img5]()
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
 
@@ -1777,7 +1771,7 @@ iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 192.168.14.18:139
 iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT 
 ```
-![img8]()
+![img6]()
      
 Esse comando cria uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
 
@@ -1785,7 +1779,7 @@ Temos que mudar o DNS, colocando no nome do samba o IP do gateway. Pois o gatewa
 
 Para isso colocamos ``smb cname gw``
 
-![img9]()
+![img7]()
 
 Lembre-se de reiniciar o bind9
 
@@ -1799,7 +1793,7 @@ sudo systemctl bind9
 
 Configuração da interface:
 
-![img10]()
+![img8]()
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
      
@@ -1808,7 +1802,7 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
 iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
-![img11]()
+![img9]()
      
 ---
      
@@ -1818,7 +1812,7 @@ iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
      
  Configuração da interface:
 
-![img12]()
+![img10]()
 
 # 4. Considerações Finais:
 
