@@ -26,9 +26,9 @@
      - [X] 3.2. Instalação do SAMBA;
      - [X] 3.3. Implementação do servidor Web LAMP;
      - [X] 3.4. Instalação do Gateway Server NAT;
+     - [X] 3.5. Configuração das interaces;
 - [X] 4. Considerações Finais; 
 - [X] 5. Referências; 
-- [X] 6. Extra
 
 # 1. Introdução
 
@@ -1882,6 +1882,36 @@ Lembre de salvar o arquivo como comando abaixo:
 sudo netplan apply  
 ```
 
+## 3.5. COnfiguração das interfaces
+     
+Iremos agora mostrar a configuração de todas as interfaces das máquinas:
+     
+- **NameServer1 (ns1)** 
+     
+  ![ns1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/interfaces/ns1.jpg)
+     
+
+- **NameServer2 (ns2)** 
+     
+  ![ns2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/interfaces/ns2.jpg)
+     
+ 
+- **Banco de Dados (bd)** 
+     
+  ![bd](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/interfaces/bd.jpg)
+     
+
+- **Web (www)** 
+     
+  ![www](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/interfaces/www.jpg)
+     
+
+- **Gateway (gw)** 
+     
+  *O samba está dentro do gw!!!!*
+     
+  ![gw](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/interfaces/gw.jpg)
+     
 # 4. Considerações Finais:
 
 Consideramos que esse trabalho foi muito trabalhoso :)
