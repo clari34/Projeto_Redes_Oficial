@@ -1649,7 +1649,7 @@ Uma imagem do nosso site:
 
 Iremos configurar o nosso gateway na máquina **10.9.14.113 com o nome gw.grupo3.turma914.ifalara.local**. Verifiquemos o funcionamento do DNS Server:
 
-![img1]()
+![img1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img1.jpg)
 
 Para começarmos a configuração do gateway devemos primeiro hasabilar o firewall e permitir o acesso ssh, para isso use os comandos a seguir:
 
@@ -1665,12 +1665,12 @@ Para permitir o acesso ssh e coloca regras do firewall, assim, quando você habi
 sudo ufw allow ssh
 ```
 
-![img2]()
+![img2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img2.jpg)
 
 
 Habilitanto firewall e não perdendo o acesso:
 
-![img3]()
+![img3](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img3.jpg)
 
 Agora iremos configurar o firewall para que ele possa encaminhar pacotes do tipo ipV4, habilitar o encaminhamento de pacotes das interfaces WAN para LAN. Para isso, entre no arquivo de configuração com o comando a seguir:
 
@@ -1680,7 +1680,7 @@ sudo nano /etc/ufw/sysctl.conf
 
 Agora dentro do arquivo deveremos achar a linha *net/ipv4/ip_forwarding=1* e retirar o comentário dela. Quando se faz isso habilitamos que pacotes possam ser transferidos de uma interface para outra
 
-![img4]()
+![img4](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img4.jpg)
 
 Vamos criar um arquivo *rc.local* com o comando
 
@@ -1765,7 +1765,7 @@ sudo nano 00-installer-config.yaml
 ```
 Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
 
-![img5]()
+![img5](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img5.jpg)
      
 Lembre de salvar o arquivo como comando abaixo:
      
@@ -1784,7 +1784,7 @@ iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 192.168.14.18:139
 iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT 
 ```
-![img6]()
+![img6](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img7.jpg)
      
 Depois salve o arquivo e execute ```sudo /etc/rc.local```
      
@@ -1801,13 +1801,13 @@ Para zona direta
 sudo nano db.grupo3.turma914.ifalara.local     
 ```
 
-![img7]()
+![img7](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img7.jpg)
      
 Para zona reversa
 ```
 sudo nano db.10.9.rev     
 ```
-![img8]()
+![img8](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img8.jpg)
 
 Lembre-se de reiniciar o bind9
 
@@ -1826,7 +1826,7 @@ sudo nano 00-installer-config.yaml
 ```
 Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
 
-![img9]()
+![img9](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img9.jpg)
      
 Lembre de salvar o arquivo como comando abaixo:
      
@@ -1841,7 +1841,7 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
 iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
-![img10]()
+![img10](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img10.jpg)
      
 ---
      
@@ -1856,7 +1856,7 @@ sudo nano 00-installer-config.yaml
 ```
 Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
 
-![img11]()
+![img11](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/gw/img11.jpg)
      
 Lembre de salvar o arquivo como comando abaixo:
      
