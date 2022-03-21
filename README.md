@@ -1069,11 +1069,11 @@ hostname -I
 systemd-resolve --status ens160
 ```
 
-![img1]()
+![img1](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img1.jpg)
 
 Fizemos também um teste para verificarmos o funcionamento do DNS:
 
-![img2]()
+![img2](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img2.jpg)
 
 
 Antes de começarmos de fato a instalação iremos atualizar a nossa máquina com o comando
@@ -1096,7 +1096,7 @@ Quando finalizar a instalação veja o funcionamento com o seguinte comando
 systemctl status mysql
 ```
 
-![img3]
+![img3](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img3.jpg)
 
 Sabemos que o MySQL tem como porta padrão a 3306, para verficarmos o funcionamento desta porta usamos o comando a seguir, logo depois você verá uma saída semelhante a da imagem:
 
@@ -1104,7 +1104,7 @@ Sabemos que o MySQL tem como porta padrão a 3306, para verficarmos o funcioname
 netstat -an | grep LISTEN
 ```
 
-![img4]()
+![img4](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img4.jpg)
 
 Perceba na imagem anterior que nas portas 3306 e 33060 o MySQL está se conectando apenas com a interface 127.0.0.1, sendo assim precisamos liberar acesso para as outras interfaces. Para isso iremos liberar para as outras interfaces utilizando o IP 0.0.0.0 (conhecido como IP coringa). Para fazer isso devemos entrar no arquivo de configuração do MySQL, use o comando abaixo para entrar no arquivo:
 
@@ -1122,11 +1122,11 @@ Verá que no arquivo tem muitas linhas, mas calma! As linhas que devemos editar 
 
 - Imagem de antes da configuração:
 
-![img5]()
+![img5](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img5.jpg)
 
 - Imagem de depois da configuração:
 
-![img6]()
+![img6](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img6.jpg)
 
 Para salvar as configurações aperte *ctrl + x*, *y* e depois aperte enter. 
 
@@ -1144,7 +1144,7 @@ Feito isso, agora liberamos as outras interfaces, para verificar use o comando j
 netstat -an | grep LISTEN
 ```
 
-![img7]()
+![img7](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img7.jpg)
 
 Pronto, agora as portas 3306 e 33060 estão funcionando para todas as interfaces!
 
@@ -1160,13 +1160,13 @@ sudo mysql_secure_installation
 
 Algumas perguntas serão feitas, marcamos com um círculo verde as respostas. No cículo vermelho está a parte de criação da sua senha mysql (anote). **No nosso caso a senha foi ```s3nh4@ifal```**
 
-![img8]()
+![img8](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img8.jpg)
 
 Pronto. você já pode usar o seu servidor de banco de dados :)
 
 Para entrar basta usar o comando ```sudo mysql```, aparecerá uma mensagem de boas vindas. Para sair digite *exit*
 
-![img9]()
+![img9](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/bd/img9.jpg)
 
 
 ### 3.3.2. APACHE
