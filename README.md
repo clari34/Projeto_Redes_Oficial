@@ -23,10 +23,10 @@
      - [X] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
 - [X] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
      - [X] 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2);
-     - [X] 3.2. Instalação do SAMBA;
+     - [X] 3.2. Implementação do SAMBA;
      - [X] 3.3. Implementação do servidor Web LAMP;
-     - [X] 3.4. Instalação do Gateway Server NAT;
-     - [X] 3.5. Configuração das interaces;
+     - [X] 3.4. Configuração do Gateway Server NAT;
+     - [X] 3.5. Configuração das interfaces;
 - [X] 4. Considerações Finais; 
 - [X] 5. Referências; 
 
@@ -730,7 +730,7 @@ Iremos fazer os testes de *dig, nslookup e pin* usando tanto a zona direta quant
      ![ping6_rev](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/dns/testes/ping6_rev.jpg)
 
 
-## 3.2. Instalação do SAMBA: 
+## 3.2. Implementação do SAMBA: 
 
 ### 3.2.1. Intalação e configuração do SAMBA
 
@@ -1645,7 +1645,7 @@ Uma imagem do nosso site:
 
 [Vídeo do teste no site!](https://drive.google.com/file/d/16pJa7HEBXy6fJjh55D661fd9UtiAnYVF/view?usp=drivesdk)
 
-## 3.4. Instalação do Gateway Server NAT:
+## 3.4. Configuração do Gateway Server NAT:
 
 Iremos configurar o nosso gateway na máquina **10.9.14.113 com o nome gw.grupo3.turma914.ifalara.local**. Verifiquemos o funcionamento do DNS Server:
 
@@ -1882,7 +1882,7 @@ Lembre de salvar o arquivo como comando abaixo:
 sudo netplan apply  
 ```
 
-## 3.5. COnfiguração das interfaces
+## 3.5. Configuração das interfaces
      
 Iremos agora mostrar a configuração de todas as interfaces das máquinas:
      
