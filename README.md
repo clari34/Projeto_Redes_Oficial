@@ -1758,7 +1758,20 @@ Em cada máquina descrita acima, vamos mudar o arquivo de configuração das int
 
 Configuração da interface:
 
+Para a configuração da inteface entre na pasta ```cd /etc/netplan``` e entre no arquivo de configuração, o yaml, com o comando abaixo:
+     
+```
+sudo nano 00-installer-config.yaml
+```
+Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
+
 ![img5]()
+     
+Lembre de salvar o arquivo como comando abaixo:
+     
+```
+sudo netplan apply  
+```
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
 
@@ -1773,13 +1786,28 @@ iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 ```
 ![img6]()
      
-Esse comando cria uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
+Depois salve o arquivo e execute ```sudo /etc/rc.local```
+     
+Essas informações criam uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
 
-Temos que mudar o DNS, colocando no nome do samba o IP do gateway. Pois o gateway bloqueia tudo agora, tudo que passa para o samba é deve passar primeiro pelo gw.
+Temos que mudar o DNS (na máquina ns1 de IP 10.9.14.114), colocando no nome do samba o IP do gateway. Pois o gateway bloqueia tudo agora, tudo que passa para o samba deve passar primeiro pelo gw.
 
-Para isso colocamos ``smb cname gw``
+Para isso colocamos ``smb cname gw``, mas no nosso caso repetimos o IP do gateway no samba.
+     
+Para entrar no arquivo de configuração do bind, execute o comando abaixo dentro da pasta ```cd /etc/bind/zones```:
+     
+Para zona direta
+```
+sudo nano db.grupo3.turma914.ifalara.local     
+```
 
 ![img7]()
+     
+Para zona reversa
+```
+sudo nano db.10.9.rev     
+```
+![img8]()
 
 Lembre-se de reiniciar o bind9
 
@@ -1791,9 +1819,20 @@ sudo systemctl bind9
 
 - **WEB**
 
-Configuração da interface:
+Para a configuração da inteface entre na pasta ```cd /etc/netplan``` e entre no arquivo de configuração, o yaml, com o comando abaixo:
+     
+```
+sudo nano 00-installer-config.yaml
+```
+Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
 
-![img8]()
+![img9]()
+     
+Lembre de salvar o arquivo como comando abaixo:
+     
+```
+sudo netplan apply  
+```
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
      
@@ -1802,7 +1841,7 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
 iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
-![img9]()
+![img10]()
      
 ---
      
@@ -1810,9 +1849,20 @@ iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
      
  Na máquina do banco de dados basta modificarmos o arquivo yaml das interfaces, para que a interfaces passem pelo gateway.
      
- Configuração da interface:
+Para a configuração da inteface entre na pasta ```cd /etc/netplan``` e entre no arquivo de configuração, o yaml, com o comando abaixo:
+     
+```
+sudo nano 00-installer-config.yaml
+```
+Comente o *gateway4* da ***ens160*** e coloque um *gateway4* na ***ens192***, esse gateway é a nossa máquina gw, sendo assim coloque o IP da interface interna do gw.
 
-![img10]()
+![img11]()
+     
+Lembre de salvar o arquivo como comando abaixo:
+     
+```
+sudo netplan apply  
+```
 
 # 4. Considerações Finais:
 
