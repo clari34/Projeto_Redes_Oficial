@@ -26,7 +26,6 @@
      - [X] 3.2. Instalação do SAMBA;
      - [X] 3.3. Implementação do servidor Web LAMP;
      - [ ] 3.4. Instalação do Gateway Server NAT;
-     - [ ] 3.5. Configuração da rede interna LAN nas VMs;
 - [X] 4. Considerações Finais; 
 - [X] 5. Referências; 
 - [X] 6. Extra
