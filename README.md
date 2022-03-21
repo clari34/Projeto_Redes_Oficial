@@ -27,8 +27,9 @@
      - [X] 3.3. Implementação do servidor Web LAMP;
      - [ ] 3.4. Instalação do Gateway Server NAT;
      - [ ] 3.5. Configuração da rede interna LAN nas VMs;
-- [ ] 4. Considerações Finais; 
-- [ ] 5. Referências; 
+- [X] 4. Considerações Finais; 
+- [X] 5. Referências; 
+- [X] 6. Extra
 
 # 1. Introdução
 
@@ -1643,7 +1644,7 @@ OBS: você pode testar o site tanto pelo celular quanto pelo computador, basta t
 
 Uma imagem do nosso site:
 
-![img30]()
+![img30](https://github.com/clari34/Projeto_Redes_Oficial/blob/main/www/site_demo.jpg)
 
 [Vídeo do teste no site!](https://drive.google.com/file/d/16pJa7HEBXy6fJjh55D661fd9UtiAnYVF/view?usp=drivesdk)
 
@@ -1655,6 +1656,45 @@ Uma imagem do nosso site:
 
 
 # 4. Considerações Finais:
-    Esse repositório será atualizado de acordo com o andamento do projeto. 
+
+Consideramos que esse trabalho foi muito trabalhoso :)
+
+Mas foi muito bom trabalhar nele, e ainda ver tudo funcionando, é incrível!
+     
+Fizemos o nosso melhor! E esperamos que possamos ajudar as pessoas que estão procurando este conteúdo, e também aqueles que estão começando e que ainda são eigas no assunto!
+     
+Não fizemos apenas por nota, foi realmente um gosto fazer esse trabalho! (Prof, não fizemos por apenas obtenção de nota, mas isso não quer dizer que não queremos a nota hahaha)
     
 # 5. Referências:
+
+- **APLICATIVOS:**
+
+   Para fazer o trabalho precisamos de dois aplicativos ***no computador***:
+   
+   - **OpenVPN Connect:** OpenVPN é um software para criar redes privadas através de túneis criptogrfados entre computadores. [Clique aqui para ser levado ao site para baixar o app](https://openvpn.net/client-connect-vpn-for-windows/)
+
+   - **PuTTy:** O PuTTY é um software de emulação de terminal, destinado a suportar o acesso remoto de servidores via shell! (Ele é feinho, mas é muito simples de mexer!). [Clique aqui para ser levado ao site para baixar o app](https://www.putty.org/)
+
+   ***No celular*** também utilizamos a OpenVPN Connect, mas como terminal ssh utilizei o TERMUX. Para baixá-los perquise no Play Store!
+
+- **MATERIAL de APOIO:**
+
+   - Aulas dirigas pelo Prof. Alaelson Jatobá;
+
+     Aula 18 (04/10/2021) - Aula de instalação , configuração e testes do SAMBA;
+     
+     Aula 21 (25/10/2021) e aula 22 (01/11/2021) - Aulas de instalação, configuração e testes do DNS;
+     
+     Aula do dia 07/03/2022 - Aula de instalação do APACHE;
+     
+     Aulas do YouTube do professor.
+     
+     Todas as aulas extras ministradas pelo professor. 
+  
+   - [Roteiros do GitHub do Prof. Alaelson Jatobá](https://github.com/alaelson/labredes2021)
+     
+# 6. Extra
+     
+Agradecemos professor por todo este tempo que esteve conosco, não participamos tanto das aulas, mas assistimos as gravações, até aquelas com participação especial, dos futuros guris de redes :) 
+
+Agradecemos por todas as aulas extras, pela ajuda e dedicação do senhor! Gratidão <3
