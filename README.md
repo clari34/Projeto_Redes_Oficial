@@ -21,11 +21,11 @@
      - [X] 2.2. Edição dos hostnames com o nome de domínio no S.O. de cada MV;
      - [X] 2.3. A configuração de hardware utilizada em cada VM;
      - [X] 2.4. Criar usuários (nomes dos integrantes da equipe) em cada VM;
-- [ ] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
+- [X] 3. Implementação dos Serviços de Rede (cada serviço uma sessão):
      - [X] 3.1. Configuração do DNS Master (ns1) e DNS Slave (ns2);
      - [X] 3.2. Instalação do SAMBA;
      - [X] 3.3. Implementação do servidor Web LAMP;
-     - [ ] 3.4. Instalação do Gateway Server NAT;
+     - [X] 3.4. Instalação do Gateway Server NAT;
 - [X] 4. Considerações Finais; 
 - [X] 5. Referências; 
 - [X] 6. Extra
@@ -1777,14 +1777,15 @@ iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 192.168.14.18:139
 iptables -A FORWARD -p tcp -d 192.168.14.18 –-dport 445 -j ACCEPT 
 ```
-
+![img8]()
+     
 Esse comando cria uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
 
 Temos que mudar o DNS, colocando no nome do samba o IP do gateway. Pois o gateway bloqueia tudo agora, tudo que passa para o samba é deve passar primeiro pelo gw.
 
 Para isso colocamos ``smb cname gw``
 
-![img8]()
+![img9]()
 
 Lembre-se de reiniciar o bind9
 
@@ -1798,7 +1799,7 @@ sudo systemctl bind9
 
 Configuração da interface:
 
-![img8]()
+![img10]()
 
 Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
      
@@ -1807,6 +1808,8 @@ Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colo
 iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
 iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
 ```
+![img11]()
+     
 ---
      
 - **BD**
@@ -1815,7 +1818,7 @@ iptables -A FORWARD -p udp -d 192.168.14.21 –-dport 80 -j ACCEPT
      
  Configuração da interface:
 
-![img8]()
+![img12]()
 
 # 4. Considerações Finais:
 
