@@ -1516,7 +1516,7 @@ Feitas as configurações anteriores agora iremos começar a montar o nosso *sit
 
 Para isso devemos criar a pasta que armazenará o nosso site 
 
-> IMPORTANTE: essa pasta deve ter o mesmo nome que COLOCAREMOS no arquivo de configuração, especificamente na parte de <VirtualHosts>
+> IMPORTANTE: essa pasta deve ter o mesmo nome que COLOCAREMOS no arquivo de configuração, especificamente na parte de \<VirtualHosts>
 
 Em nosso caso o nome da pasta deverá se chamar ***www.grupo3.turma914.ifalara.local***
 
@@ -1647,10 +1647,167 @@ Uma imagem do nosso site:
 
 ## 3.4. Instalação do Gateway Server NAT:
 
-*Nesse roteiro o servidor Gateway como NAT foi configurado na VM (10.9.14.113)*
+Iremos configurar o nosso gateway na máquina **10.9.14.113 com o nome gw.grupo3.turma914.ifalara.local**. Verifiquemos o funcionamento do DNS Server:
 
-## 3.5. Configuração da rede interna LAN nas VMs:
+![img1]()
 
+Para começarmos a configuração do gateway devemos primeiro hasabilar o firewall e permitir o acesso ssh, para isso use os comandos a seguir:
+
+Para habilitar o firewall
+
+```
+sudo ufw enable
+```
+
+Para permitir o acesso ssh e coloca regras do firewall, assim, quando você habilita de novo, não perde o acesso 
+
+```
+sudo ufw allow ssh
+```
+
+![img2]()
+
+
+Habilitanto firewall e não perdendo o acesso:
+
+![img3]()
+
+Agora iremos configurar o firewall para que ele possa encaminhar pacotes do tipo ipV4, habilitar o encaminhamento de pacotes das interfaces WAN para LAN. Para isso, entre no arquivo de configuração com o comando a seguir:
+
+```
+sudo nano /etc/ufw/sysctl.conf
+```
+
+Agora dentro do arquivo deveremos achar a linha *net/ipv4/ip_forwarding=1* e retirar o comentário dela. Quando se faz isso habilitamos que pacotes possam ser transferidos de uma interface para outra
+
+![img4]()
+
+Vamos criar um arquivo *rc.local* com o comando
+
+```
+sudo nano /etc/rc.local
+```
+
+E iremos copiar essas informções abaixo para o arquivo:
+
+```
+#!/bin/bash
+
+# /etc/rc.local
+
+# Default policy to drop all incoming packets.
+# Politica padrão para bloquear (drop) todos os pacotes de entrada
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
+# Accept incoming packets from localhost and the LAN interface.
+# Aceita pacotes de entrada a partir das interfaces localhost e the LAN.
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -i ens192 -j ACCEPT
+
+# Accept incoming packets from the WAN if the router initiated the connection.
+# Aceita pacotes de entrada a partir da WAN se o roteador iniciou a conexao
+iptables -A INPUT -i ens160 -m conntrack \
+--ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# Forward LAN packets to the WAN.
+# Encaminha os pacotes da LAN para a WAN
+iptables -A FORWARD -i ens192 -o ens160 -j ACCEPT
+
+# Forward WAN packets to the LAN if the LAN initiated the connection.
+# Encaminha os pacotes WAN para a LAN se a LAN inicar a conexao.
+iptables -A FORWARD -i ens160 -o ens192 -m conntrack \
+--ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# NAT traffic going out the WAN interface.
+# Trafego NAT sai pela interface WAN
+iptables -t nat -A POSTROUTING -o ens160 -j MASQUERADE
+
+# rc.local needs to exit with 0
+# rc.local precisa sair com 0
+exit 0
+```
+
+Depois salve o arquivo, para isso aperte *ctrl + x, y e depois enter*
+
+Vamos dar permissão para execução deste arquivo com o comando abaixo:
+
+```
+sudo chmod 755 /etc/rc.local
+```
+
+Vamos ver se o arquivo foi criado, para isso use o comando ``ls -a``
+
+![img5]()
+
+Agora execute o arquivo com o comando abaixo
+
+```
+sudo ./etc/rc.local
+```
+
+Depois verifique se o firewal está funcionando (ativo)
+
+```
+sudo ufw status
+```
+
+![img6]()
+
+---
+
+Agora vamos entrar na nossa máquina do **samba** (10.9.14.101), depois na VM do **www** (10.9.14.215) e depois na VM do **banco de dados** (10.9.14.216).
+
+Em cada máquina descrita acima, vamos mudar o arquivo de configuração das interfaces (o yaml), iremos adicionar o IP do nosso gateway na ens192, e comentar o gateway da ens160, para que o acesso à elas passem pelo gateway primeiro.
+
+- **SAMBA**
+
+Configuração da interface:
+
+![img7]()
+
+Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
+
+```
+#Recebe pacotes na porta 445 da interface externa do gw e encaminha para o servidor interno na porta 445
+iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 445 -j DNAT –-to 10.9.14.101:445
+iptables -A FORWARD -p tcp -d 10.9.14.101 –-dport 445 -j ACCEPT
+
+#Recebe pacotes na porta 139 da interface externa do gw e encaminha para o servidor interno na porta 139
+iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 139 -j DNAT –-to 10.9.14.101:139
+iptables -A FORWARD -p tcp -d 10.9.14.101 –-dport 445 -j ACCEPT 
+```
+
+Esse comando cria uma rota para que os arquivos que passam pelas portas 445 e 139 passem pelo IP do samba.
+
+Temos que mudar o DNS, colocando no nome do samba o IP do gateway. Pois o gateway bloqueia tudo agora, tudo que passa para o samba é deve passar primeiro pelo gw.
+
+Para isso colocamos ``smb cname gw``
+
+![img8]()
+
+Lembre-se de reiniciar o bind9
+
+```
+sudo systemctl bind9
+```
+
+---
+
+- **WEB**
+
+Configuração da interface:
+
+![img8]()
+
+Depois iremos para a máquina do gateway para mudar o arquivo /etc/rc.local colocando as informações abaixo
+     
+```
+#Encaminhamento para servidor web na porta 80
+iptables -A PREROUTING -t nat -i ens160 -p tcp –-dport 80 -j DNAT –-to 192.168.14.21:80
+iptables -A FORWARD -p udp -d 10.0.0.10 –-dport 80 -j ACCEPT
+```
+---
 
 # 4. Considerações Finais:
 
